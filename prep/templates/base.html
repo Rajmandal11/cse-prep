@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}CSE Prep Master{% endblock %}</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'prep/style.css' %}">
+<script>
+  const t = localStorage.getItem('cseprep_theme') || 'light';
+  document.documentElement.setAttribute('data-theme', t);
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('cseprep_theme', next);
+    const label = document.getElementById('theme-label');
+    if (label) label.textContent = next === 'dark' ? '☀️ Light' : '🌙 Dark';
+  }
+  function csrftoken() {
+    const m = document.cookie.match(/csrftoken=([^;]+)/);
+    return m ? m[1] : '';
+  }
+  function toggleBell() {
+    const pop = document.getElementById('bell-pop');
+    if (pop) pop.classList.toggle('open');
+  }
+  document.addEventListener('click', function (e) {
+    const pop = document.getElementById('bell-pop');
+    const btn = document.getElementById('bell-btn');
+    if (pop && btn && !pop.contains(e.target) && !btn.contains(e.target)) pop.classList.remove('open');
+  });
+</script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="side-brand" href="{% url 'landing' %}"><span class="side-logo">✦</span> CSE Prep Master</a>
+    <nav class="side-nav">
+      <div class="side-group">
+        <div class="side-label">MENU</div>
+        <a class="side-link{% if request.resolver_match.url_name == 'dashboard' %} active{% endif %}" href="{% url 'dashboard' %}">📊 Dashboard</a>
+        <a class="side-link{% if request.resolver_match.url_name == 'subjects' %} active{% endif %}" href="{% url 'subjects' %}">📚 My Courses</a>
+        <a class="side-link{% if request.resolver_match.url_name == 'practice' or request.resolver_match.url_name == 'practice_run' %} active{% endif %}" href="{% url 'practice' %}">✏️ Practice</a>
+        <a class="side-link{% if request.resolver_match.url_name == 'test_new' or request.resolver_match.url_name == 'test_player' or request.resolver_match.url_name == 'test_result' or request.resolver_match.url_name == 'test_review' %} active{% endif %}" href="{% url 'test_new' %}">⏱️ Tests</a>
+        <a class="side-link{% if request.resolver_match.url_name == 'coding_list' or request.resolver_match.url_name == 'coding_workspace' %} active{% endif %}" href="{% url 'coding_list' %}">💻 Coding</a>
+      </div>
+      <div class="side-group">
+        <div class="side-label">STUDY</div>
+        <a class="side-link{% if request.resolver_match.url_name == 'mistakes' %} active{% endif %}" href="{% url 'mistakes' %}">📝 Mistakes</a>
+        <a class="side-link{% if request.resolver_match.url_name == 'bookmarks' %} active{% endif %}" href="{% url 'bookmarks' %}">🔖 Bookmarks</a>
+        <a class="side-link{% if request.resolver_match.url_name == 'analytics' %} active{% endif %}" href="{% url 'analytics' %}">📈 Analytics</a>
+        <a class="side-link{% if request.resolver_match.url_name == 'assistant' %} active{% endif %}" href="{% url 'assistant' %}">🤖 Assistant</a>
+      </div>
+      <div class="side-group">
+        <div class="side-label">ACCOUNT</div>
+        <a class="side-link{% if request.resolver_match.url_name == 'profile' %} active{% endif %}" href="{% url 'profile' %}">👤 Profile</a>
+        <a class="side-link{% if request.resolver_match.url_name == 'contribute' or request.resolver_match.url_name == 'my_contributions' %} active{% endif %}" href="{% url 'contribute' %}">➕ Contribute</a>
+        {% if user.is_staff %}
+        <a class="side-link{% if request.resolver_match.url_name == 'admin_panel' %} active{% endif %}" href="{% url 'admin_panel' %}">🛡️ Review Queue</a>
+        {% endif %}
+      </div>
+    </nav>
+    <div class="side-bottom">
+      <button class="btn ghost small side-theme" onclick="toggleTheme()"><span id="theme-label">🌙 Dark</span></button>
+      {% if user.is_authenticated %}
+        <a class="btn small side-auth" href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <a class="btn small side-auth" href="{% url 'login' %}">Login</a>
+      {% endif %}
+    </div>
+  </aside>
+
+  <div class="main-col">
+    <header class="topbar">
+      <form class="search-form" method="get" action="{% url 'subjects' %}">
+        <span class="search-icon">🔍</span>
+        <input name="q" type="search" placeholder="Search courses…" value="{{ request.GET.q|default:'' }}" aria-label="Search courses">
+      </form>
+      <div class="bell-wrap">
+        <button class="bell-btn" id="bell-btn" type="button" onclick="toggleBell()" aria-label="Notifications">🔔</button>
+        <div class="bell-pop" id="bell-pop">No notifications yet</div>
+      </div>
+      {% if user.is_authenticated %}
+        <a class="user-chip" href="{% url 'profile' %}">{{ user.first_name|default:user.username }}</a>
+        <a class="btn small" href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <a class="btn small" href="{% url 'login' %}">Log in</a>
+      {% endif %}
+    </header>
+    <main>
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+      </div>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </main>
+    <footer>CSE Prep Master — practice, test, code, and track your preparation.</footer>
+  </div>
+</div>
+<script>
+  (function () {
+    const label = document.getElementById('theme-label');
+    if (label) label.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️ Light' : '🌙 Dark';
+  })();
+</script>
+</body>
+</html>

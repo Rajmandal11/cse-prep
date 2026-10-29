@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>CSE Prep Master</h1>
+  <p>Smart exam preparation for B.Tech CSE students — practice MCQs, take mock tests, solve coding problems, and track your progress.</p>
+  <p class="hero-actions">
+    <a class="btn" href="{% url 'practice' %}">Start Practicing</a>
+    <a class="btn hero-outline" href="{% url 'test_new' %}">Take a Mock Test</a>
+    <a class="btn hero-outline" href="{% url 'coding_list' %}">Coding Practice</a>
+  </p>
+</section>
+
+<div class="feature-grid">
+  <div class="feature-card"><h3>MCQ Practice</h3><p>Subject- and topic-wise questions with step-by-step explanations and difficulty levels.</p></div>
+  <div class="feature-card"><h3>Mock Tests</h3><p>Timed, full-length tests with negative marking, a question palette, and detailed review.</p></div>
+  <div class="feature-card"><h3>Coding Practice</h3><p>Coding problems with examples, hints, and visible test cases to check your solution.</p></div>
+  <div class="feature-card"><h3>Analytics &amp; Mistakes</h3><p>Track accuracy by subject, topic, and difficulty, and revise the questions you got wrong.</p></div>
+</div>
+
+<h2>Browse by category</h2>
+{% for category, subs in categories.items %}
+<h3 class="cat-head">{{ category }}</h3>
+<div class="grid">
+  {% for s in subs %}
+  <a class="subj-card" href="{% url 'subjects' %}?q={{ s.code }}">
+    <strong>{{ s.name }}</strong>
+    <span>{% if s.code %}{{ s.code }} · {% endif %}{{ s.n }} questions</span>
+  </a>
+  {% endfor %}
+</div>
+{% endfor %}
+{% endblock %}

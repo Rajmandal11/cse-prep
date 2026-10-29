@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:0.5rem">
+  <div>
+    <h2 style="margin-bottom:0">Welcome back, {{ user.first_name|default:user.username }} 👋</h2>
+    <p style="color:var(--muted);margin-top:0.2rem">Here's how your preparation is going.</p>
+  </div>
+  <p>
+    <a class="btn" href="{% url 'practice' %}">Quick Practice</a>
+    <a class="btn ghost" href="{% url 'test_new' %}">Mock Test</a>
+    <a class="btn ghost" href="{% url 'contribute' %}">+ Add Question</a>
+  </p>
+</div>
+
+<!-- Stat cards, like the reference dashboards -->
+<div class="statgrid">
+  <div class="card stat accent-blue"><div class="num">{{ data.totals.attempted }}</div><div class="lbl">Questions attempted</div><div class="sub">{{ week_attempted }} this week</div></div>
+  <div class="card stat accent-green"><div class="num">{{ data.totals.accuracy }}%</div><div class="lbl">Accuracy</div><div class="sub">{{ data.totals.correct }} correct answers</div></div>
+  <div class="card stat accent-amber"><div class="num">{{ data.coding.accepted }}/{{ data.coding.attempted }}</div><div class="lbl">Coding solved</div><div class="sub">of {{ coding_total }} problems in bank</div></div>
+  <div class="card stat accent-red"><div class="num">{{ mistake_count }}</div><div class="lbl">Mistakes to revise</div><div class="sub"><a href="{% url 'mistakes' %}">Open My Mistakes →</a></div></div>
+</div>
+
+<!-- Charts row -->
+<div class="grid" style="grid-template-columns:2fr 1fr">
+  <div class="card">
+    <h3>Accuracy — last 14 days</h3>
+    <canvas id="chart-accuracy" height="110"></canvas>
+  </div>
+  <div class="card">
+    <h3>Attempts by subject</h3>
+    <canvas id="chart-subjects" height="110"></canvas>
+    {% if not subject_labels_json or subject_labels_json == '[]' %}
+    <p style="color:var(--muted)">No attempts yet — your subject mix will appear here.</p>
+    {% endif %}
+  </div>
+</div>
+
+<div class="grid" style="grid-template-columns:1fr 1fr 1fr">
+  <div class="card">
+    <h3>This week</h3>
+    <canvas id="chart-week" height="120"></canvas>
+    <p style="color:var(--muted)">{{ week_attempted }} questions attempted in the last 7 days.</p>
+  </div>
+  <div class="card">
+    <h3>Your tasks <span class="badge">{{ tasks_done }}/{{ tasks|length }}</span></h3>
+    <div class="progress"><div style="width:{% widthratio tasks_done tasks|length 100 %}%"></div></div>
+    <ul style="list-style:none;padding:0">
+      {% for t in tasks %}
+      <li style="padding:0.5rem 0;border-bottom:1px solid var(--line)">
+        {% if t.done %}✅{% else %}⭕{% endif %}
+        <a href="{% url t.link %}">{{ t.label }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Recent activity</h3>
+    {% for a in recent %}
+    <p style="margin:0.45rem 0">{% if a.is_correct %}✅{% else %}❌{% endif %}
+      {{ a.question.question|truncatewords:10 }}
+      <span style="color:var(--muted)">· {{ a.question.subject.name }}</span></p>
+    {% empty %}
+    <p style="color:var(--muted)">No activity yet. Start a practice set and it shows up here.</p>
+    {% endfor %}
+  </div>
+</div>
+
+{% if data.recommendations %}
+<div class="card">
+  <h3>Recommended for you (from your real results)</h3>
+  <ul>{% for r in data.recommendations %}<li>{{ r.message }}</li>{% endfor %}</ul>
+</div>
+{% endif %}
+
+<div class="card">
+  <h3>Subjects</h3>
+  <p>{% for s in subjects %}<a class="badge" href="{% url 'practice' %}">{{ s.name }} ({{ s.n }})</a> {% endfor %}</p>
+  <p><a href="{% url 'subjects' %}">Browse all subjects →</a> · <a href="{% url 'analytics' %}">Full analytics →</a></p>
+</div>
+
+<script src="{% static 'prep/chart.umd.min.js' %}"></script>
+<script>
+const daily = {{ daily_json|safe }};
+const week = {{ week_json|safe }};
+const subjLabels = {{ subject_labels_json|safe }};
+const subjCounts = {{ subject_counts_json|safe }};
+new Chart(document.getElementById('chart-accuracy'), {
+  type: 'line',
+  data: {labels: daily.map(d => d.label),
+    datasets: [
+      {label: 'Accuracy %', data: daily.map(d => d.accuracy), borderColor: '#1d4ed8', tension: 0.35, fill: false},
+      {label: 'Attempted', data: daily.map(d => d.attempted), borderColor: '#f59e0b', tension: 0.35, yAxisID: 'y1', fill: false}]},
+  options: {responsive: true, scales: {y: {min: 0, max: 100}, y1: {position: 'right', grid: {drawOnChartArea: false}}}}
+});
+new Chart(document.getElementById('chart-subjects'), {
+  type: 'doughnut',
+  data: {labels: subjLabels, datasets: [{data: subjCounts,
+    backgroundColor: ['#1d4ed8', '#16a34a', '#f59e0b', '#dc2626', '#9333ea', '#0891b2']}]},
+  options: {responsive: true, plugins: {legend: {position: 'bottom'}}}
+});
+new Chart(document.getElementById('chart-week'), {
+  type: 'bar',
+  data: {labels: week.map(d => d.label), datasets: [{label: 'Attempted', data: week.map(d => d.attempted), backgroundColor: '#1d4ed8'}]},
+  options: {responsive: true, plugins: {legend: {display: false}}}
+});
+</script>
+{% endblock %}

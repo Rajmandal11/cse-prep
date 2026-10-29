@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Profile &amp; Settings</h2>
+<div class="card">
+  <form method="post">{% csrf_token %}
+    <p><strong>Account:</strong> {{ user.username }} ({{ user.first_name }})</p>
+    <label>Semester</label>
+    <input name="semester" type="number" min="1" max="8" value="{{ profile.semester|default:'' }}">
+    <label>Preferred subjects (comma-separated)</label>
+    <input name="preferred_subjects" value="{{ profile.preferred_subjects }}">
+    <label>Learning goals</label>
+    <textarea name="goals" rows="3">{{ profile.goals }}</textarea>
+    <button class="btn" type="submit">Save profile</button>
+  </form>
+</div>
+<div class="card">
+  <h3>Data &amp; account</h3>
+  <p>Your practice attempts, bookmarks, mistakes and test results are stored in the app database under your account. Guest practice (when logged out) is kept only in your browser.</p>
+  <p><a class="btn ghost" href="/admin/">Django admin (staff only)</a> <a class="btn ghost" href="{% url 'admin_panel' %}">Question management</a></p>
+</div>
+{% endblock %}

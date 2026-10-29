@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load explain_tags %}
+{% block content %}
+<h2>My Contributions</h2>
+<p style="color:var(--muted)">Questions you added. <span class="badge">Pending</span> = waiting for review, <span class="badge easy">Approved</span> = live in practice and tests, <span class="badge hard">Rejected</span> = not added to the bank.</p>
+{% for q in questions %}
+<div class="card">
+  <p><span class="badge">{{ q.subject.name }}</span> <span class="badge">{{ q.topic }}</span>
+     <span class="badge {{ q.difficulty }}">{{ q.difficulty }}</span>
+     {% if q.status == 'approved' %}<span class="badge easy">Approved ✓</span>
+     {% elif q.status == 'pending' %}<span class="badge">Pending review</span>
+     {% else %}<span class="badge hard">Rejected</span>{% endif %}</p>
+  <div class="q-body">{{ q.question|qtext }}</div>
+  <ol type="A">{% for o in q.options.all %}<li>{{ o.option_text }}{% if o.is_correct %} ✓{% endif %}</li>{% endfor %}</ol>
+  <div class="expl" style="color:var(--muted)">{{ q.explanation|explain }}</div>
+</div>
+{% empty %}
+<p>You haven't contributed any questions yet. <a class="btn" href="{% url 'contribute' %}">Add one →</a></p>
+{% endfor %}
+{% endblock %}

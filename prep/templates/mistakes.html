@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load explain_tags %}
+{% block content %}
+<h2>My Mistakes</h2>
+<p style="color:var(--muted)">Questions you answered incorrectly, with your last answer, the correct answer and the explanation. Revision mode prioritises the ones you miss most often.</p>
+<form method="get" class="card">
+  <div style="display:flex;gap:0.6rem;flex-wrap:wrap">
+    <select name="subject" style="flex:1;min-width:160px">
+      <option value="">All subjects</option>
+      {% for s in subjects %}<option value="{{ s.id }}" {% if s.id|stringformat:"s" == subject %}selected{% endif %}>{{ s.name }}</option>{% endfor %}
+    </select>
+    <input name="topic" placeholder="Topic filter" value="{{ topic }}" style="flex:1;min-width:160px">
+    <select name="difficulty" style="flex:1;min-width:130px">
+      <option value="">All levels</option>
+      <option value="easy" {% if difficulty == 'easy' %}selected{% endif %}>Easy</option>
+      <option value="medium" {% if difficulty == 'medium' %}selected{% endif %}>Medium</option>
+      <option value="hard" {% if difficulty == 'hard' %}selected{% endif %}>Hard</option>
+    </select>
+    <button class="btn" type="submit">Filter</button>
+  </div>
+</form>
+{% if rows %}
+<form method="post" style="margin-bottom:1rem">{% csrf_token %}
+  <input type="hidden" name="action" value="practice_all">
+  <button class="btn" type="submit">Practice All Wrong Answers ({{ rows|length }})</button>
+</form>
+{% endif %}
+{% for r in rows %}
+<div class="card">
+  <p><span class="badge">{{ r.question.subject.name }}</span> <span class="badge">{{ r.question.topic }}</span>
+     <span class="badge {{ r.question.difficulty }}">{{ r.question.difficulty }}</span>
+     <span class="badge">Missed {{ r.count }} time{{ r.count|pluralize }}</span></p>
+  <div class="q-body">{{ r.question.question|qtext }}</div>
+  <p>Your last answer: <strong>{{ r.attempt.selected_option }}</strong> (option index) · Correct: <strong>{{ r.question.correct_indices }}</strong></p>
+  <div class="expl">{{ r.question.explanation|explain }}</div>
+  <form method="post" style="display:inline">{% csrf_token %}
+    <input type="hidden" name="action" value="retry"><input type="hidden" name="question_id" value="{{ r.question.id }}">
+    <button class="btn small" type="submit">Retry Question</button>
+  </form>
+  <form method="post" style="display:inline">{% csrf_token %}
+    <input type="hidden" name="action" value="remove"><input type="hidden" name="question_id" value="{{ r.question.id }}">
+    <button class="btn ghost small" type="submit">Remove from Revision</button>
+  </form>
+</div>
+{% empty %}
+<p>No mistakes yet — keep practicing and anything you miss will appear here.</p>
+{% endfor %}
+{% endblock %}

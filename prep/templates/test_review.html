@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load explain_tags %}
+{% block content %}
+<h2>Answer Review — {{ test.config.name }}</h2>
+<p>Score: {{ test.score }}/{{ test.total_marks }} · Correct {{ test.correct_count }} · Incorrect {{ test.incorrect_count }} · Unattempted {{ test.unattempted_count }}</p>
+{% for r in rows %}
+<div class="card">
+  <p><span class="badge">{{ r.question.subject.name }}</span> <span class="badge">{{ r.question.topic }}</span>
+     {% if r.marked %}<span class="badge">Marked for review</span>{% endif %}</p>
+  <div class="q-body">{{ r.question.question|qtext }}</div>
+  {% for o in r.opts %}
+  <div class="opt {% if o.is_correct %}correct{% elif o.is_selected %}wrong{% endif %}"
+       style="cursor:default">{{ o.letter }}. {{ o.text }}
+    {% if o.is_correct %} ✓ correct{% endif %}
+    {% if o.is_selected and not o.is_correct %} ✗ your answer{% endif %}</div>
+  {% endfor %}
+  {% if r.selected is None %}<p style="color:var(--muted)">You did not attempt this question.</p>{% endif %}
+  <p><strong>Explanation:</strong></p>
+  <div class="expl">{{ r.explanation|explain }}</div>
+</div>
+{% endfor %}
+<p><a class="btn ghost" href="{% url 'test_result' test.id %}">Back to result</a></p>
+{% endblock %}

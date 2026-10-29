@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Practice Session</h2>
+<div class="card">
+  <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem">
+    <span id="counter"></span>
+    <span id="score"></span>
+  </div>
+  <div class="progress"><div id="bar" style="width:0%"></div></div>
+</div>
+
+<div class="card" id="player">
+  <p><span class="badge" id="q-subject"></span> <span class="badge" id="q-topic"></span> <span class="badge" id="q-diff"></span></p>
+  <div id="q-text" class="q-body"></div>
+  <div id="opts"></div>
+  <p>
+    <button class="btn" id="btn-submit">Submit Answer</button>
+    <button class="btn ghost" id="btn-hint">Show Hint</button>
+    <button class="btn ghost" id="btn-bookmark">🔖 Bookmark</button>
+    <button class="btn ghost" id="btn-retry" style="display:none">Try Again</button>
+  </p>
+  <div id="hint" class="card" style="display:none"></div>
+  <div id="feedback" style="display:none"></div>
+  <p>
+    <button class="btn ghost" id="btn-prev">← Previous</button>
+    <button class="btn ghost" id="btn-next">Next →</button>
+    <a class="btn ghost" href="{% url 'practice' %}">New set</a>
+  </p>
+</div>
+
+<div class="card" id="done" style="display:none">
+  <h3>Session complete 🎉</h3>
+  <p id="done-text"></p>
+  <p><a class="btn" href="{% url 'practice' %}">Practice again</a>
+     <a class="btn ghost" href="{% url 'mistakes' %}">My Mistakes</a>
+     <a class="btn ghost" href="{% url 'dashboard' %}">Dashboard</a></p>
+</div>
+
+<script>
+const QUESTIONS = {{ questions_json|safe }};
+const LOGGED_IN = {% if user.is_authenticated %}true{% else %}false{% endif %};
+const BOOKMARKED = new Set({{ bookmarked|join:"," }});
+let idx = 0, selected = null, answered = false, correctCount = 0, answeredCount = 0;
+let topicNotes = {};
+fetch('/api/subjects/').then(r => r.json()).then(d => {
+  d.subjects.forEach(s => s.topics.forEach(t => topicNotes[t.name] = t.notes));
+});
+
+// Mirror of the server-side `qtext` template filter: prose paragraphs + code panels.
+function isCodeLine(line, inCode) {
+  const s = line.trim();
+  if (!s) return inCode;
+  if ((line[0] === ' ' || line[0] === '\t') && inCode) return true;
+  if (/^(SELECT|INSERT INTO|UPDATE|DELETE FROM|FROM|WHERE|ORDER BY|GROUP BY|function|for|if|else|elif|while|return|print|var|let|const|class|def)\b/.test(s)) return true;
+  if (['console.log', 'setTimeout', 'Promise.', 'document.', 'System.out'].some(t => s.startsWith(t))) return true;
+  if (/^[A-Za-z_][\w.\[\]]*\s*=[^=]/.test(s)) return true;
+  if (s === '{' || s === '}' || s === '};' || s.endsWith('{')) return true;
+  return false;
+}
+function formatQuestion(raw) {
+  const text = (raw || '').trim();
+  if (!text) return '<p class="q-text-p"></p>';
+  let out = '', prose = [], code = [], inCode = false;
+  const flushP = () => { if (prose.length) { out += `<p class="q-text-p">${prose.join(' ')}</p>`; prose = []; } };
+  const flushC = () => { if (code.length) { out += `<pre class="q-code">${code.join('\n')}</pre>`; code = []; } };
+  escHtml(text).split('\n').forEach(line => {
+    const s = line.trim();
+    if (!s) return;
+    const m = s.match(/^(Query|Code|Program)\s*:\s*(.+)$/);
+    if (m && isCodeLine(m[2], false)) { flushC(); prose.push(m[1] + ':'); flushP(); code.push(m[2]); inCode = true; return; }
+    if (isCodeLine(line, inCode)) { flushP(); code.push(line.replace(/\s+$/, '')); inCode = true; }
+    else { flushC(); prose.push(s); inCode = false; }
+  });
+  flushP(); flushC();
+  return out;
+}
+
+function render() {
+  const q = QUESTIONS[idx];
+  document.getElementById('counter').textContent = `Question ${idx + 1} of ${QUESTIONS.length}`;
+  document.getElementById('score').textContent = `Score: ${correctCount}/${answeredCount} answered`;
+  document.getElementById('bar').style.width = `${(idx / QUESTIONS.length) * 100}%`;
+  document.getElementById('q-subject').textContent = q.subject;
+  document.getElementById('q-topic').textContent = q.topic;
+  const diffEl = document.getElementById('q-diff');
+  diffEl.textContent = q.difficulty; diffEl.className = 'badge ' + q.difficulty;
+  document.getElementById('q-text').innerHTML = formatQuestion(q.question);
+  const opts = document.getElementById('opts');
+  opts.innerHTML = '';
+  selected = null; answered = false;
+  document.getElementById('feedback').style.display = 'none';
+  document.getElementById('hint').style.display = 'none';
+  document.getElementById('btn-retry').style.display = 'none';
+  document.getElementById('btn-submit').disabled = false;
+  document.getElementById('btn-bookmark').textContent = BOOKMARKED.has(q.id) ? '🔖 Bookmarked' : '🔖 Bookmark';
+  q.options.forEach((text, i) => {
+    const b = document.createElement('button');
+    b.className = 'opt'; b.textContent = String.fromCharCode(65 + i) + '. ' + text;
+    b.onclick = () => {
+      if (answered) return;
+      selected = i;
+      [...opts.children].forEach(c => c.classList.remove('sel'));
+      b.classList.add('sel');
+    };
+    opts.appendChild(b);
+  });
+}
+
+function escHtml(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function fracs(t) {
+  const f = (m, a, b) => `<span class="frac"><span class="frac-num">${a}</span><span class="frac-den">${b}</span></span>`;
+  return t.replace(/\(([^()]{1,40})\)\/\(([^()]{1,40})\)/g, f).replace(/\b(\d[\w.]*)\/(\d[\w.]*)\b/g, f);
+}
+// Mirror of the server-side `explain` template filter: step rows + answer bar.
+function formatExplanation(raw) {
+  const text = (raw || '').trim();
+  if (!text) return '<p class="sol-lead">No explanation available.</p>';
+  let esc = escHtml(text), answer = '';
+  const am = esc.match(/Correct answer\s*:\s*(.+)$/is);
+  if (am) { answer = am[1].trim().replace(/\.$/, ''); esc = esc.slice(0, am.index).trimEnd(); }
+  let out = '';
+  esc.split(/(?=Step\s*\d+\s*:)/).forEach(part => {
+    part = part.trim(); if (!part) return;
+    const sm = part.match(/^Step\s*(\d+)\s*:\s*([\s\S]*)$/);
+    out += sm ? `<div class="sol-step"><span class="sol-chip">Step ${sm[1]}</span><p>${fracs(sm[2].trim())}</p></div>`
+              : `<p class="sol-lead">${fracs(part)}</p>`;
+  });
+  if (answer) out += `<div class="sol-answer">✓ Correct answer: ${fracs(answer)}</div>`;
+  return out;
+}
+
+document.getElementById('btn-submit').onclick = async () => {
+  if (selected === null || answered) return;
+  const q = QUESTIONS[idx];
+  const res = await fetch('/api/practice/answer/', {
+    method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrftoken()},
+    body: JSON.stringify({question_id: q.id, selected})
+  }).then(r => r.json());
+  answered = true; answeredCount++;
+  if (res.correct) correctCount++;
+  if (!LOGGED_IN) {
+    const g = JSON.parse(localStorage.getItem('cseprep_guest_attempts') || '[]');
+    g.push({qid: q.id, subject: q.subject, topic: q.topic, difficulty: q.difficulty, correct: res.correct});
+    localStorage.setItem('cseprep_guest_attempts', JSON.stringify(g));
+  }
+  const opts = document.getElementById('opts').children;
+  res.correctOption.forEach(i => opts[i].classList.add('correct'));
+  if (!res.correct && selected !== null) opts[selected].classList.add('wrong');
+  const fb = document.getElementById('feedback');
+  fb.style.display = 'block';
+  fb.className = res.correct ? 'ok' : 'err';
+  fb.innerHTML = `<strong>${res.correct ? '✅ Correct!' : '❌ Incorrect.'}</strong>
+    <div class="expl">${formatExplanation(res.explanation)}</div>`;
+  document.getElementById('btn-retry').style.display = 'inline-block';
+  document.getElementById('btn-submit').disabled = true;
+  document.getElementById('score').textContent = `Score: ${correctCount}/${answeredCount} answered`;
+};
+
+document.getElementById('btn-retry').onclick = () => { render(); };
+document.getElementById('btn-prev').onclick = () => { if (idx > 0) { idx--; render(); } };
+document.getElementById('btn-next').onclick = () => {
+  if (idx < QUESTIONS.length - 1) { idx++; render(); }
+  else {
+    document.getElementById('player').style.display = 'none';
+    document.getElementById('done').style.display = 'block';
+    document.getElementById('done-text').textContent =
+      `You answered ${correctCount} out of ${answeredCount} attempted questions correctly.`;
+  }
+};
+document.getElementById('btn-hint').onclick = () => {
+  const q = QUESTIONS[idx];
+  const notes = topicNotes[q.topic] || 'Revise the core concepts of this topic, eliminate clearly wrong options, then choose.';
+  const h = document.getElementById('hint');
+  h.style.display = 'block';
+  h.innerHTML = `<strong>Hint — ${q.topic}:</strong><p>${notes}</p><p style="color:var(--muted)">This hint never reveals the answer. Full solution appears after you submit.</p>`;
+};
+document.getElementById('btn-bookmark').onclick = async () => {
+  const q = QUESTIONS[idx];
+  if (!LOGGED_IN) {
+    const g = JSON.parse(localStorage.getItem('cseprep_guest_bookmarks') || '[]');
+    const i = g.indexOf(q.id);
+    if (i >= 0) g.splice(i, 1); else g.push(q.id);
+    localStorage.setItem('cseprep_guest_bookmarks', JSON.stringify(g));
+    document.getElementById('btn-bookmark').textContent = g.includes(q.id) ? '🔖 Bookmarked' : '🔖 Bookmark';
+    return;
+  }
+  const res = await fetch('/api/bookmarks/toggle/', {
+    method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrftoken()},
+    body: JSON.stringify({question_id: q.id})
+  }).then(r => r.json());
+  if (res.bookmarked) BOOKMARKED.add(q.id); else BOOKMARKED.delete(q.id);
+  document.getElementById('btn-bookmark').textContent = res.bookmarked ? '🔖 Bookmarked' : '🔖 Bookmark';
+};
+render();
+</script>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ problem.title }} <span class="badge {{ problem.difficulty }}">{{ problem.difficulty }}</span> <span class="badge">{{ problem.topic }}</span></h2>
+<div class="card">
+  <p style="white-space:pre-wrap">{{ problem.description }}</p>
+  <p><strong>Input format:</strong> {{ problem.input_format }}</p>
+  <p><strong>Output format:</strong> {{ problem.output_format }}</p>
+  <p><strong>Constraints:</strong> {{ problem.constraints }}</p>
+  <p><strong>Time complexity:</strong> {{ problem.time_complexity }} &nbsp;|&nbsp; <strong>Space complexity:</strong> {{ problem.space_complexity }}</p>
+  <h3>Examples</h3>
+  {% for ex in problem.examples_json %}
+  <pre>Input:
+{{ ex.input }}
+Output:
+{{ ex.output }}</pre>
+  {% endfor %}
+  {% if problem.hints_json %}
+  <details><summary>Hints</summary><ul>{% for h in problem.hints_json %}<li>{{ h }}</li>{% endfor %}</ul></details>
+  {% endif %}
+</div>
+
+<div class="card">
+  <label>Language</label>
+  <select id="lang">
+    {% for code, name in languages.items %}<option value="{{ code }}">{{ name }}</option>{% endfor %}
+    {% if 'java' not in languages %}<option value="java" disabled>Java (not available on this server)</option>{% endif %}
+  </select>
+  <label>Your code</label>
+  <textarea id="editor" class="code" spellcheck="false"></textarea>
+  <p>
+    <button class="btn" id="btn-run">▶ Run Code</button>
+    <button class="btn" id="btn-submit">Submit Solution</button>
+    <button class="btn ghost" id="btn-reset">Reset Code</button>
+  </p>
+  <label>Custom input</label>
+  <textarea id="custom-input" rows="3"></textarea>
+  <h3>Output</h3>
+  <pre id="output">(no run yet)</pre>
+  <div id="results"></div>
+</div>
+
+<script>
+const STARTER = {{ starter|safe }};
+const PROBLEM_ID = {{ problem.id }};
+const editor = document.getElementById('editor');
+const langSel = document.getElementById('lang');
+function loadStarter() {
+  const lang = langSel.value;
+  editor.value = (STARTER && STARTER[lang]) || '';
+}
+langSel.onchange = loadStarter;
+loadStarter();
+document.getElementById('btn-reset').onclick = loadStarter;
+async function post(action, extra) {
+  const body = {code: editor.value, language: langSel.value, ...extra};
+  const res = await fetch(`/api/coding/${PROBLEM_ID}/${action}/`, {
+    method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrftoken()},
+    body: JSON.stringify(body)
+  }).then(r => r.json());
+  return res;
+}
+document.getElementById('btn-run').onclick = async () => {
+  const res = await post('run', {input: document.getElementById('custom-input').value});
+  document.getElementById('output').textContent =
+    (res.error ? 'Error:\n' + res.error : res.output) || '(no output)';
+};
+document.getElementById('btn-submit').onclick = async () => {
+  document.getElementById('output').textContent = 'Running all test cases…';
+  const res = await post('submit', {});
+  const div = document.getElementById('results');
+  let html = `<p><strong>${res.status}</strong> — passed ${res.passed}/${res.total} test cases.</p><ul>`;
+  (res.results || []).forEach((r, i) => {
+    html += `<li>Test ${i + 1} (${r.visible ? 'visible' : 'hidden'}): ${r.passed ? '✅ passed' : '❌ failed'}`;
+    if (r.visible && !r.passed) {
+      html += `<br>Your output: <code>${(r.output || '').replace(/</g, '&lt;')}</code><br>Expected: <code>${(r.expected || '').replace(/</g, '&lt;')}</code>`;
+      if (r.error) html += `<br>Error: <code>${r.error.replace(/</g, '&lt;')}</code>`;
+    }
+    html += '</li>';
+  });
+  html += '</ul><p style="color:var(--muted)">Hidden test inputs and outputs are never shown.</p>';
+  div.innerHTML = html;
+  document.getElementById('output').textContent = 'See test-case results above.';
+};
+</script>
+{% endblock %}

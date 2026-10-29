@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Performance Analytics</h2>
+<div class="statgrid">
+  <div class="card stat"><div class="num">{{ data.totals.attempted }}</div><div class="lbl">Attempted</div></div>
+  <div class="card stat"><div class="num">{{ data.totals.correct }}</div><div class="lbl">Correct</div></div>
+  <div class="card stat"><div class="num">{{ data.totals.incorrect }}</div><div class="lbl">Incorrect</div></div>
+  <div class="card stat"><div class="num">{{ data.totals.accuracy }}%</div><div class="lbl">Accuracy</div></div>
+</div>
+<div class="grid">
+  <div class="card">
+    <h3>Accuracy by subject</h3>
+    {% for name, b in data.by_subject.items %}
+    <div class="bar-row"><span class="lbl">{{ name }}</span><span class="bar"><span style="width:{{ b.accuracy }}%"></span></span><span>{{ b.accuracy }}% ({{ b.correct }}/{{ b.attempted }})</span></div>
+    {% empty %}<p style="color:var(--muted)">No data yet.</p>{% endfor %}
+  </div>
+  <div class="card">
+    <h3>Accuracy by topic</h3>
+    {% for name, b in data.by_topic.items %}
+    <div class="bar-row"><span class="lbl">{{ name }}</span><span class="bar"><span style="width:{{ b.accuracy }}%"></span></span><span>{{ b.accuracy }}% ({{ b.correct }}/{{ b.attempted }})</span></div>
+    {% empty %}<p style="color:var(--muted)">No data yet.</p>{% endfor %}
+  </div>
+  <div class="card">
+    <h3>Difficulty-wise performance</h3>
+    {% for name, b in data.by_diff.items %}
+    <div class="bar-row"><span class="lbl">{{ name }}</span><span class="bar"><span style="width:{{ b.accuracy }}%"></span></span><span>{{ b.accuracy }}% ({{ b.correct }}/{{ b.attempted }})</span></div>
+    {% empty %}<p style="color:var(--muted)">No data yet.</p>{% endfor %}
+  </div>
+  <div class="card">
+    <h3>Recent mock tests</h3>
+    {% for t in data.tests %}
+    <p>{{ t.config.name }} — {{ t.score }}/{{ t.total_marks }} ({{ t.correct_count }}✓ {{ t.incorrect_count }}✗ {{ t.unattempted_count }}–)</p>
+    {% empty %}<p style="color:var(--muted)">No submitted tests yet.</p>{% endfor %}
+    <h3>Coding</h3>
+    <p>{{ data.coding.accepted }} accepted out of {{ data.coding.attempted }} submissions.</p>
+  </div>
+</div>
+{% if data.recommendations %}
+<div class="card">
+  <h3>Recommendations (computed from your results)</h3>
+  <ul>{% for r in data.recommendations %}<li>{{ r.message }}</li>{% endfor %}</ul>
+</div>
+{% endif %}
+{% endblock %}

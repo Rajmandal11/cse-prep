@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load explain_tags %}
+{% block content %}
+<h2>Admin — Question Bank Management</h2>
+{% if denied %}
+<div class="card">
+  <p>This area is for staff users only. If you are the site admin, log in with a staff account (or use the Django admin at <a href="/admin/">/admin/</a>).</p>
+</div>
+{% else %}
+<div class="statgrid">
+  <div class="card stat"><div class="num">{{ stats.questions }}</div><div class="lbl">Questions</div></div>
+  <div class="card stat"><div class="num">{{ stats.problems }}</div><div class="lbl">Coding problems</div></div>
+  <div class="card stat"><div class="num">{{ stats.users }}</div><div class="lbl">Users</div></div>
+  <div class="card stat"><div class="num">{{ stats.tests }}</div><div class="lbl">Tests taken</div></div>
+  <div class="card stat accent-amber"><div class="num">{{ stats.pending }}</div><div class="lbl">Pending review</div></div>
+</div>
+<div class="card">
+  <h3>Review queue — user-contributed questions</h3>
+  {% for q in pending %}
+  <div style="border-top:1px solid var(--line);padding:0.7rem 0">
+    <p><span class="badge">{{ q.subject.name }}</span> <span class="badge">{{ q.topic }}</span>
+       <span class="badge">{{ q.difficulty }}</span>
+       <span style="color:var(--muted)">by {{ q.submitted_by.username|default:"?" }}</span></p>
+    <div class="q-body">{{ q.question|qtext }}</div>
+    <ol type="A">{% for o in q.options.all %}<li>{{ o.option_text }}{% if o.is_correct %} ✓{% endif %}</li>{% endfor %}</ol>
+    <div class="expl" style="color:var(--muted)">{{ q.explanation|explain }}</div>
+    <form method="post" style="display:inline">{% csrf_token %}
+      <input type="hidden" name="action" value="approve"><input type="hidden" name="question_id" value="{{ q.id }}">
+      <button class="btn small" type="submit">Approve → live</button></form>
+    <form method="post" style="display:inline">{% csrf_token %}
+      <input type="hidden" name="action" value="reject"><input type="hidden" name="question_id" value="{{ q.id }}">
+      <button class="btn danger small" type="submit">Reject</button></form>
+  </div>
+  {% empty %}
+  <p style="color:var(--muted)">No questions waiting for review.</p>
+  {% endfor %}
+</div>
+<div class="card">
+  <h3>Add / edit question</h3>
+  <form method="post">{% csrf_token %}
+    <input type="hidden" name="action" value="add">
+    <label>Subject</label>
+    <select name="subject">{% for s in subjects %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}</select>
+    <label>Topic</label><input name="topic" required>
+    <label>Difficulty</label>
+    <select name="difficulty"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select>
+    <label>Question</label><textarea name="question" rows="3" required></textarea>
+    <label>Option A</label><input name="opt0" required>
+    <label>Option B</label><input name="opt1" required>
+    <label>Option C</label><input name="opt2" required>
+    <label>Option D</label><input name="opt3" required>
+    <label>Correct option</label>
+    <select name="correct"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
+    <label>Explanation (step-by-step)</label><textarea name="explanation" rows="4"></textarea>
+    <label>Marks</label><input name="marks" type="number" value="1" min="1">
+    <button class="btn" type="submit">Save question</button>
+  </form>
+  <p style="color:var(--muted)">Validation enforced: question + all 4 options required; exactly one correct answer is stored. The full Django admin (with option inlines) is at <a href="/admin/">/admin/</a>.</p>
+</div>
+<div class="card">
+  <h3>Recent questions</h3>
+  <table>
+    <tr><th>Question</th><th>Subject</th><th>Topic</th><th>Level</th><th></th></tr>
+    {% for q in questions %}
+    <tr>
+      <td>{{ q.question|truncatewords:12 }}</td><td>{{ q.subject.name }}</td><td>{{ q.topic }}</td><td>{{ q.difficulty }}</td>
+      <td><form method="post" style="display:inline">{% csrf_token %}
+        <input type="hidden" name="action" value="delete"><input type="hidden" name="question_id" value="{{ q.id }}">
+        <button class="btn danger small" type="submit" onclick="return confirm('Delete this question?')">Delete</button></form></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+{% endblock %}

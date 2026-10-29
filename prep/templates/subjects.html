@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Subjects &amp; Syllabus</h2>
+<form method="get" class="card">
+  <div style="display:flex;gap:0.6rem;flex-wrap:wrap">
+    <input name="q" placeholder="Search by name or code…" value="{{ q }}" style="flex:2;min-width:200px">
+    <select name="category" style="flex:1;min-width:160px">
+      <option value="">All categories</option>
+      {% for c in categories %}<option value="{{ c }}" {% if c == category %}selected{% endif %}>{{ c }}</option>{% endfor %}
+    </select>
+    <input name="semester" placeholder="Semester" value="{{ semester }}" style="flex:1;min-width:110px">
+    <button class="btn" type="submit">Search</button>
+  </div>
+</form>
+
+<div class="grid">
+{% for s in subjects %}
+  <div class="card">
+    <h3>{{ s.name }}</h3>
+    <p><span class="badge">{{ s.category }}</span>
+       {% if s.code %}<span class="badge">{{ s.code }}</span>{% endif %}
+       {% if s.semester %}<span class="badge">Sem {{ s.semester }}</span>{% endif %}
+       <span class="badge">{{ s.n }} questions</span></p>
+    {% for t in s.topics.all %}
+      <p style="margin:0.2rem 0">• {{ t.name }}</p>
+    {% endfor %}
+    <p><a class="btn small" href="{% url 'practice' %}">Practice this subject</a></p>
+  </div>
+{% empty %}
+  <p>No subjects match your search.</p>
+{% endfor %}
+</div>
+
+{% if user.is_authenticated %}
+<div class="card">
+  <h3>Add a custom subject</h3>
+  <form method="post">{% csrf_token %}
+    <label>Name</label><input name="name" required>
+    <label>Category</label>
+    <select name="category">{% for c in categories %}<option value="{{ c }}">{{ c }}</option>{% endfor %}</select>
+    <label>Code (optional)</label><input name="code">
+    <label>Semester (optional)</label><input name="semester" type="number" min="1" max="8">
+    <button class="btn" type="submit">Add subject</button>
+  </form>
+</div>
+{% endif %}
+{% endblock %}

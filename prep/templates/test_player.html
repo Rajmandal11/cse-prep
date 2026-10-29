@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ test.config.name }} <span class="badge">{{ test.mode }}</span></h2>
+<div class="card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem">
+  <span>Time left: <span class="timer" id="timer"></span></span>
+  <span id="status"></span>
+  <button class="btn danger" id="btn-submit">Submit Test</button>
+</div>
+
+<div class="card">
+  <h3>Question palette</h3>
+  <div class="palette" id="palette"></div>
+  <p style="color:var(--muted);font-size:0.9rem">Green = answered, amber = marked for review.</p>
+</div>
+
+<div class="card" id="player">
+  <p><span class="badge" id="q-subject"></span> <span class="badge" id="q-topic"></span> <span class="badge" id="q-diff"></span></p>
+  <div id="q-text" class="q-body"></div>
+  <div id="opts"></div>
+  <p>
+    <button class="btn ghost" id="btn-prev">← Previous</button>
+    <button class="btn" id="btn-save">Save &amp; Next</button>
+    <button class="btn ghost" id="btn-mark">Mark for Review &amp; Next</button>
+    <button class="btn ghost" id="btn-clear">Clear Response</button>
+  </p>
+</div>
+
+<script>
+const ITEMS = {{ items_json|safe }};
+const TEST_ID = {{ test.id }};
+let idx = 0, selected = null;
+let secondsLeft = {{ duration_sec }};
+const timerEl = document.getElementById('timer');
+function tick() {
+  const m = Math.floor(secondsLeft / 60), s = secondsLeft % 60;
+  timerEl.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  if (secondsLeft <= 300) timerEl.classList.add('low');
+  if (secondsLeft <= 0) { submitTest(false); return; }
+  secondsLeft--;
+}
+setInterval(tick, 1000); tick();
+
+function palette() {
+  const pal = document.getElementById('palette');
+  pal.innerHTML = '';
+  ITEMS.forEach((it, i) => {
+    const b = document.createElement('button');
+    b.className = 'pal' + (it.selected !== null ? ' answered' : '') + (it.marked ? ' marked' : '') + (i === idx ? ' current' : '');
+    b.textContent = i + 1;
+    b.onclick = () => { idx = i; render(); };
+    pal.appendChild(b);
+  });
+  const ans = ITEMS.filter(i => i.selected !== null).length;
+  document.getElementById('status').textContent = `Answered ${ans}/${ITEMS.length} · Marked ${ITEMS.filter(i => i.marked).length}`;
+}
+function escHtml(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+// Mirror of the server-side `qtext` template filter: prose paragraphs + code panels.
+function isCodeLine(line, inCode) {
+  const s = line.trim();
+  if (!s) return inCode;
+  if ((line[0] === ' ' || line[0] === '\t') && inCode) return true;
+  if (/^(SELECT|INSERT INTO|UPDATE|DELETE FROM|FROM|WHERE|ORDER BY|GROUP BY|function|for|if|else|elif|while|return|print|var|let|const|class|def)\b/.test(s)) return true;
+  if (['console.log', 'setTimeout', 'Promise.', 'document.', 'System.out'].some(t => s.startsWith(t))) return true;
+  if (/^[A-Za-z_][\w.\[\]]*\s*=[^=]/.test(s)) return true;
+  if (s === '{' || s === '}' || s === '};' || s.endsWith('{')) return true;
+  return false;
+}
+function formatQuestion(raw) {
+  const text = (raw || '').trim();
+  if (!text) return '<p class="q-text-p"></p>';
+  let out = '', prose = [], code = [], inCode = false;
+  const flushP = () => { if (prose.length) { out += `<p class="q-text-p">${prose.join(' ')}</p>`; prose = []; } };
+  const flushC = () => { if (code.length) { out += `<pre class="q-code">${code.join('\n')}</pre>`; code = []; } };
+  escHtml(text).split('\n').forEach(line => {
+    const s = line.trim();
+    if (!s) return;
+    const m = s.match(/^(Query|Code|Program)\s*:\s*(.+)$/);
+    if (m && isCodeLine(m[2], false)) { flushC(); prose.push(m[1] + ':'); flushP(); code.push(m[2]); inCode = true; return; }
+    if (isCodeLine(line, inCode)) { flushP(); code.push(line.replace(/\s+$/, '')); inCode = true; }
+    else { flushC(); prose.push(s); inCode = false; }
+  });
+  flushP(); flushC();
+  return out;
+}
+
+function render() {
+  const it = ITEMS[idx];
+  document.getElementById('q-subject').textContent = it.subject;
+  document.getElementById('q-topic').textContent = it.topic;
+  const d = document.getElementById('q-diff');
+  d.textContent = it.difficulty; d.className = 'badge ' + it.difficulty;
+  document.getElementById('q-text').innerHTML = formatQuestion(it.question);
+  const opts = document.getElementById('opts');
+  opts.innerHTML = '';
+  selected = it.selected;
+  it.options.forEach((text, i) => {
+    const b = document.createElement('button');
+    b.className = 'opt' + (selected === i ? ' sel' : '');
+    b.textContent = String.fromCharCode(65 + i) + '. ' + text;
+    b.onclick = () => {
+      selected = i;
+      [...opts.children].forEach(c => c.classList.remove('sel'));
+      b.classList.add('sel');
+    };
+    opts.appendChild(b);
+  });
+  palette();
+}
+async function save(marked) {
+  const it = ITEMS[idx];
+  it.selected = selected; it.marked = marked;
+  await fetch(`/api/tests/${TEST_ID}/answer/`, {
+    method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrftoken()},
+    body: JSON.stringify({question_id: it.qid, selected, marked})
+  });
+}
+document.getElementById('btn-save').onclick = async () => {
+  await save(false);
+  if (idx < ITEMS.length - 1) { idx++; render(); } else palette();
+};
+document.getElementById('btn-mark').onclick = async () => {
+  await save(true);
+  if (idx < ITEMS.length - 1) { idx++; render(); } else palette();
+};
+document.getElementById('btn-clear').onclick = () => { selected = null; render(); };
+document.getElementById('btn-prev').onclick = () => { if (idx > 0) { idx--; render(); } };
+async function submitTest(ask = true) {
+  if (ask && !confirm('Submit the test now? You cannot change answers after submission.')) return;
+  const res = await fetch(`/api/tests/${TEST_ID}/submit/`, {
+    method: 'POST', headers: {'X-CSRFToken': csrftoken()}
+  }).then(r => r.json());
+  if (res.score !== undefined) window.location.href = `/tests/${TEST_ID}/result/`;
+  else alert(res.error || 'Submission failed.');
+}
+document.getElementById('btn-submit').onclick = submitTest;
+render();
+</script>
+{% endblock %}

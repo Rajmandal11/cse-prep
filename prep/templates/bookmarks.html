@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load explain_tags %}
+{% block content %}
+<h2>Bookmarks</h2>
+{% for b in bookmarks %}
+<div class="card">
+  <p><span class="badge">{{ b.question.subject.name }}</span> <span class="badge">{{ b.question.topic }}</span></p>
+  <div class="q-body">{{ b.question.question|qtext }}</div>
+  <form method="post">{% csrf_token %}
+    <input type="hidden" name="question_id" value="{{ b.question.id }}">
+    <button class="btn ghost small" type="submit">Remove bookmark</button>
+  </form>
+</div>
+{% empty %}
+<p>Nothing bookmarked yet. Tap 🔖 on any practice question to save it here for revision.</p>
+{% endfor %}
+{% endblock %}

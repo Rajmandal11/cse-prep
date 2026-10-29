@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Coding Practice</h2>
+<form method="get" class="card">
+  <div style="display:flex;gap:0.6rem;flex-wrap:wrap">
+    <select name="difficulty" style="flex:1;min-width:140px">
+      <option value="">All levels</option>
+      <option value="easy" {% if difficulty == 'easy' %}selected{% endif %}>Easy</option>
+      <option value="medium" {% if difficulty == 'medium' %}selected{% endif %}>Medium</option>
+      <option value="hard" {% if difficulty == 'hard' %}selected{% endif %}>Hard</option>
+    </select>
+    <input name="topic" placeholder="Filter by topic…" value="{{ topic }}" style="flex:2;min-width:180px">
+    <button class="btn" type="submit">Filter</button>
+  </div>
+</form>
+<div class="grid">
+{% for p in problems %}
+  <div class="card">
+    <h3>{{ p.title }} {% if p.id in solved %}<span class="badge easy">✓ Solved</span>{% endif %}</h3>
+    <p><span class="badge {{ p.difficulty }}">{{ p.difficulty }}</span> <span class="badge">{{ p.topic }}</span></p>
+    <p>{{ p.description|truncatewords:25 }}</p>
+    <p><a class="btn small" href="{% url 'coding_workspace' p.id %}">Solve →</a></p>
+  </div>
+{% empty %}
+  <p>No coding problems yet — run the seed command to load them.</p>
+{% endfor %}
+</div>
+{% endblock %}

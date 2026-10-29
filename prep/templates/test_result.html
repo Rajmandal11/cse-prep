@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Test Result — {{ test.config.name }}</h2>
+<div class="statgrid">
+  <div class="card stat"><div class="num">{{ test.score }}/{{ test.total_marks }}</div><div class="lbl">Score</div></div>
+  <div class="card stat"><div class="num">{{ test.correct_count }}</div><div class="lbl">Correct</div></div>
+  <div class="card stat"><div class="num">{{ test.incorrect_count }}</div><div class="lbl">Incorrect</div></div>
+  <div class="card stat"><div class="num">{{ test.unattempted_count }}</div><div class="lbl">Unattempted</div></div>
+</div>
+<div class="card">
+  <p>Scoring: +{{ test.config.marks_per_question }} per correct answer, −{{ test.config.negative_marks }} per wrong answer, 0 for unattempted.</p>
+  <p>
+    <a class="btn" href="{% url 'test_review' test.id %}">Review answers &amp; explanations</a>
+    <a class="btn ghost" href="{% url 'test_new' %}">Take another test</a>
+    <a class="btn ghost" href="{% url 'dashboard' %}">Dashboard</a>
+  </p>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Study Assistant</h2>
+<p style="color:var(--muted)">No AI provider needed: this assistant works from the question bank and your real results.</p>
+<div class="card">
+  <h3>Topic notes &amp; formula explainer</h3>
+  <form method="get">
+    <input name="q" placeholder="Search a topic, formula or subject…" value="{{ query }}">
+    <button class="btn" type="submit">Search</button>
+  </form>
+  {% for t in notes %}
+  <div style="border-top:1px solid var(--line);padding:0.6rem 0">
+    <strong>{{ t.subject.name }} — {{ t.name }}</strong>
+    <p style="white-space:pre-wrap">{{ t.notes|default:"No revision notes stored for this topic yet." }}</p>
+  </div>
+  {% empty %}
+  {% if query %}<p>No notes matched "{{ query }}". Try "Percentage", "Normalization" or "Arrays".</p>{% endif %}
+  {% endfor %}
+</div>
+<div class="card">
+  <h3>Your personal revision plan</h3>
+  {% if user.is_authenticated %}
+    {% for r in plan %}<p>• {{ r.message }}</p>
+    {% empty %}<p>No weak topics yet (need 3+ attempts below 70% to appear). Keep practicing!</p>{% endfor %}
+  {% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to get a revision plan computed from your attempts.</p>
+  {% endif %}
+</div>
+{% endblock %}
