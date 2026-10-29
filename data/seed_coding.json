@@ -1,0 +1,1624 @@
+{
+  "problems": [
+    {
+      "id": "code-easy-max",
+      "title": "Find Maximum Element in Array",
+      "difficulty": "easy",
+      "topic": "Arrays",
+      "description": "Given an array of integers, find and print the largest element.",
+      "inputFormat": "First line: integer n (number of elements). Second line: n space-separated integers.",
+      "outputFormat": "Print the maximum element.",
+      "constraints": "1 <= n <= 10^5, -10^9 <= element <= 10^9",
+      "examples": [
+        {
+          "input": "5\n1 2 3 4 5",
+          "output": "5"
+        },
+        {
+          "input": "3\n-5 -2 -9",
+          "output": "-2"
+        },
+        {
+          "input": "1\n42",
+          "output": "42"
+        }
+      ],
+      "tests": [
+        {
+          "input": "4\n7 7 7 7",
+          "output": "7",
+          "hidden": true
+        },
+        {
+          "input": "6\n10 3 25 8 25 1",
+          "output": "25",
+          "hidden": true
+        },
+        {
+          "input": "2\n-1000000000 1000000000",
+          "output": "1000000000",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    # TODO: parse n and the array, print the maximum\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: parse input, return the maximum element\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    if not data:\n        return\n    n = int(data[0])\n    arr = list(map(int, data[1:1 + n]))\n    print(max(arr))\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "hints": [
+        "Scan the array once, keeping the largest value seen so far.",
+        "Initialise the maximum with the first element, not with 0, so all-negative arrays work."
+      ]
+    },
+    {
+      "id": "code-easy-second-max",
+      "title": "Find Second-Largest Element",
+      "difficulty": "easy",
+      "topic": "Arrays",
+      "description": "Given an array of integers with at least two distinct values, find the second-largest distinct element.",
+      "inputFormat": "First line: integer n. Second line: n space-separated integers.",
+      "outputFormat": "Print the second-largest distinct element.",
+      "constraints": "2 <= n <= 10^5, -10^9 <= element <= 10^9, at least two distinct values exist",
+      "examples": [
+        {
+          "input": "5\n1 2 3 4 5",
+          "output": "4"
+        },
+        {
+          "input": "3\n5 5 4",
+          "output": "4"
+        },
+        {
+          "input": "4\n7 7 7 2",
+          "output": "2"
+        }
+      ],
+      "tests": [
+        {
+          "input": "4\n100 1 100 50",
+          "output": "50",
+          "hidden": true
+        },
+        {
+          "input": "5\n5 4 3 2 1",
+          "output": "4",
+          "hidden": true
+        },
+        {
+          "input": "3\n-1 -2 -3",
+          "output": "-2",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    # TODO: find the second-largest DISTINCT element\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the second-largest distinct element\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    n = int(data[0])\n    arr = list(map(int, data[1:1 + n]))\n    first = second = None\n    for x in arr:\n        if first is None or x > first:\n            second = first\n            first = x\n        elif x != first and (second is None or x > second):\n            second = x\n    print(second)\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "hints": [
+        "Track the largest and second-largest values in a single pass.",
+        "Duplicates of the maximum must not count as the second largest."
+      ]
+    },
+    {
+      "id": "code-easy-reverse-array",
+      "title": "Reverse an Array",
+      "difficulty": "easy",
+      "topic": "Arrays",
+      "description": "Given an array, print its elements in reverse order.",
+      "inputFormat": "First line: integer n. Second line: n space-separated integers (omitted when n = 0).",
+      "outputFormat": "Print the elements in reverse order, space-separated. Print an empty line when n = 0.",
+      "constraints": "0 <= n <= 10^5, -10^9 <= element <= 10^9",
+      "examples": [
+        {
+          "input": "3\n1 2 3",
+          "output": "3 2 1"
+        },
+        {
+          "input": "1\n5",
+          "output": "5"
+        },
+        {
+          "input": "5\n1 2 3 4 5",
+          "output": "5 4 3 2 1"
+        }
+      ],
+      "tests": [
+        {
+          "input": "4\n10 20 30 40",
+          "output": "40 30 20 10",
+          "hidden": true
+        },
+        {
+          "input": "2\n-1 -2",
+          "output": "-2 -1",
+          "hidden": true
+        },
+        {
+          "input": "0",
+          "output": "",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    # TODO: print the array reversed\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the array reversed, space-separated\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    if not data:\n        print('')\n        return\n    n = int(data[0])\n    arr = list(map(int, data[1:1 + n]))\n    print(' '.join(map(str, reversed(arr))))\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "You can reverse with two pointers swapping from both ends.",
+        "Reversing in place uses O(1) extra space."
+      ]
+    },
+    {
+      "id": "code-easy-palindrome",
+      "title": "Check Palindrome String",
+      "difficulty": "easy",
+      "topic": "Strings",
+      "description": "Given a string of lowercase letters, determine whether it reads the same forwards and backwards.",
+      "inputFormat": "A single line containing the string (lowercase letters only).",
+      "outputFormat": "Print 'true' if the string is a palindrome, otherwise 'false' (all lowercase).",
+      "constraints": "0 <= length <= 10^5",
+      "examples": [
+        {
+          "input": "racecar",
+          "output": "true"
+        },
+        {
+          "input": "hello",
+          "output": "false"
+        },
+        {
+          "input": "madam",
+          "output": "true"
+        }
+      ],
+      "tests": [
+        {
+          "input": "a",
+          "output": "true",
+          "hidden": true
+        },
+        {
+          "input": "ab",
+          "output": "false",
+          "hidden": true
+        },
+        {
+          "input": "noon",
+          "output": "true",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    s = sys.stdin.readline().strip()\n    # TODO: print 'true' if s is a palindrome else 'false'\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return 'true' if the string is a palindrome else 'false'\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    s = sys.stdin.readline().strip()\n    print('true' if s == s[::-1] else 'false')\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "hints": [
+        "Compare characters from both ends moving toward the centre.",
+        "A single character (and the empty string) is a palindrome."
+      ]
+    },
+    {
+      "id": "code-easy-reverse-vowels",
+      "title": "Reverse Vowels of a String",
+      "difficulty": "easy",
+      "topic": "Strings",
+      "description": "Reverse only the vowels of a string, keeping all other characters in their original positions. Vowels are a, e, i, o, u (both cases).",
+      "inputFormat": "A single line containing the string (letters only).",
+      "outputFormat": "Print the string with its vowels reversed.",
+      "constraints": "0 <= length <= 10^5",
+      "examples": [
+        {
+          "input": "hello",
+          "output": "holle"
+        },
+        {
+          "input": "leetcode",
+          "output": "leotcede"
+        },
+        {
+          "input": "xyz",
+          "output": "xyz"
+        }
+      ],
+      "tests": [
+        {
+          "input": "AEIOU",
+          "output": "UOIEA",
+          "hidden": true
+        },
+        {
+          "input": "a",
+          "output": "a",
+          "hidden": true
+        },
+        {
+          "input": "beautiful",
+          "output": "buiutafel",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    s = sys.stdin.readline().rstrip('\\n')\n    # TODO: reverse only the vowels\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the string with vowels reversed\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    s = list(sys.stdin.readline().rstrip('\\n'))\n    vowels = set('aeiouAEIOU')\n    i, j = 0, len(s) - 1\n    while i < j:\n        while i < j and s[i] not in vowels:\n            i += 1\n        while i < j and s[j] not in vowels:\n            j -= 1\n        if i < j:\n            s[i], s[j] = s[j], s[i]\n            i += 1\n            j -= 1\n    print(''.join(s))\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "Use two pointers: one from the start, one from the end, skipping non-vowels.",
+        "Swap only when both pointers are on vowels."
+      ]
+    },
+    {
+      "id": "code-easy-anagrams",
+      "title": "Check Anagrams",
+      "difficulty": "easy",
+      "topic": "Strings",
+      "description": "Given two strings of lowercase letters, determine whether one is an anagram of the other (same letters, same counts, possibly different order).",
+      "inputFormat": "Two lines: the first string, then the second string.",
+      "outputFormat": "Print 'true' if the strings are anagrams, otherwise 'false' (all lowercase).",
+      "constraints": "0 <= length <= 10^5",
+      "examples": [
+        {
+          "input": "listen\nsilent",
+          "output": "true"
+        },
+        {
+          "input": "hello\nworld",
+          "output": "false"
+        },
+        {
+          "input": "a\na",
+          "output": "true"
+        }
+      ],
+      "tests": [
+        {
+          "input": "anagram\nnagaram",
+          "output": "true",
+          "hidden": true
+        },
+        {
+          "input": "rat\ncar",
+          "output": "false",
+          "hidden": true
+        },
+        {
+          "input": "ab\nba",
+          "output": "true",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().splitlines()\n    # TODO: print 'true' if the two strings are anagrams\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return 'true' if the two strings are anagrams\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().splitlines()\n    a = lines[0] if len(lines) > 0 else ''\n    b = lines[1] if len(lines) > 1 else ''\n    from collections import Counter\n    print('true' if Counter(a) == Counter(b) else 'false')\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "hints": [
+        "Anagrams have identical character counts - compare frequency maps.",
+        "Different lengths can never be anagrams; check that first."
+      ]
+    },
+    {
+      "id": "code-easy-factorial",
+      "title": "Factorial of a Number",
+      "difficulty": "easy",
+      "topic": "Mathematical Problems",
+      "description": "Given a non-negative integer n, compute n! (the product of all positive integers up to n). By definition, 0! = 1.",
+      "inputFormat": "A single integer n.",
+      "outputFormat": "Print n! as an integer.",
+      "constraints": "0 <= n <= 100",
+      "examples": [
+        {
+          "input": "5",
+          "output": "120"
+        },
+        {
+          "input": "0",
+          "output": "1"
+        },
+        {
+          "input": "3",
+          "output": "6"
+        }
+      ],
+      "tests": [
+        {
+          "input": "1",
+          "output": "1",
+          "hidden": true
+        },
+        {
+          "input": "10",
+          "output": "3628800",
+          "hidden": true
+        },
+        {
+          "input": "20",
+          "output": "2432902008176640000",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    n = int(sys.stdin.read().strip())\n    # TODO: print n!\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return n! as a string (use BigInt for large n)\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    n = int(sys.stdin.read().strip())\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    print(result)\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "hints": [
+        "Multiply 1 x 2 x ... x n in a loop.",
+        "Remember 0! = 1. In JavaScript, use BigInt for n > 20."
+      ]
+    },
+    {
+      "id": "code-easy-prime",
+      "title": "Check Prime Number",
+      "difficulty": "easy",
+      "topic": "Mathematical Problems",
+      "description": "Given an integer n, determine whether it is a prime number (divisible only by 1 and itself, and greater than 1).",
+      "inputFormat": "A single integer n.",
+      "outputFormat": "Print 'true' if n is prime, otherwise 'false' (all lowercase).",
+      "constraints": "0 <= n <= 10^9",
+      "examples": [
+        {
+          "input": "7",
+          "output": "true"
+        },
+        {
+          "input": "10",
+          "output": "false"
+        },
+        {
+          "input": "2",
+          "output": "true"
+        }
+      ],
+      "tests": [
+        {
+          "input": "1",
+          "output": "false",
+          "hidden": true
+        },
+        {
+          "input": "0",
+          "output": "false",
+          "hidden": true
+        },
+        {
+          "input": "97",
+          "output": "true",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    n = int(sys.stdin.read().strip())\n    # TODO: print 'true' if n is prime\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return 'true' if n is prime else 'false'\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    n = int(sys.stdin.read().strip())\n    if n < 2:\n        print('false')\n        return\n    i = 2\n    while i * i <= n:\n        if n % i == 0:\n            print('false')\n            return\n        i += 1\n    print('true')\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(sqrt(n))",
+      "spaceComplexity": "O(1)",
+      "hints": [
+        "Only test divisors up to sqrt(n): if n has a factor larger than sqrt(n), the co-factor is smaller.",
+        "0 and 1 are not prime. 2 is the only even prime."
+      ]
+    },
+    {
+      "id": "code-easy-trailing-zeros",
+      "title": "Trailing Zeros in Factorial",
+      "difficulty": "easy",
+      "topic": "Mathematical Problems",
+      "description": "Given n, count how many trailing zeros n! has in decimal representation, without computing n! itself.",
+      "inputFormat": "A single integer n.",
+      "outputFormat": "Print the number of trailing zeros in n!.",
+      "constraints": "0 <= n <= 10^9",
+      "examples": [
+        {
+          "input": "5",
+          "output": "1"
+        },
+        {
+          "input": "10",
+          "output": "2"
+        },
+        {
+          "input": "25",
+          "output": "6"
+        }
+      ],
+      "tests": [
+        {
+          "input": "0",
+          "output": "0",
+          "hidden": true
+        },
+        {
+          "input": "100",
+          "output": "24",
+          "hidden": true
+        },
+        {
+          "input": "3",
+          "output": "0",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    n = int(sys.stdin.read().strip())\n    # TODO: count trailing zeros of n! without computing n!\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the count of trailing zeros in n!\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    n = int(sys.stdin.read().strip())\n    count = 0\n    p = 5\n    while p <= n:\n        count += n // p\n        p *= 5\n    print(count)\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "hints": [
+        "Each trailing zero comes from a factor 10 = 2 x 5; factors of 5 are scarcer, so count them.",
+        "Count floor(n/5) + floor(n/25) + floor(n/125) + ..."
+      ]
+    },
+    {
+      "id": "code-easy-sum-digits",
+      "title": "Sum of Digits",
+      "difficulty": "easy",
+      "topic": "Mathematical Problems",
+      "description": "Given a non-negative integer, compute the sum of its decimal digits.",
+      "inputFormat": "A single non-negative integer.",
+      "outputFormat": "Print the sum of its digits.",
+      "constraints": "0 <= n <= 10^18",
+      "examples": [
+        {
+          "input": "123",
+          "output": "6"
+        },
+        {
+          "input": "0",
+          "output": "0"
+        },
+        {
+          "input": "999",
+          "output": "27"
+        }
+      ],
+      "tests": [
+        {
+          "input": "1001",
+          "output": "2",
+          "hidden": true
+        },
+        {
+          "input": "5",
+          "output": "5",
+          "hidden": true
+        },
+        {
+          "input": "987654321",
+          "output": "45",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    n = int(sys.stdin.read().strip())\n    # TODO: print the sum of the digits of n\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the sum of the digits of n\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    n = int(sys.stdin.read().strip())\n    total = 0\n    while n > 0:\n        total += n % 10\n        n //= 10\n    print(total)\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(d) where d is the number of digits",
+      "spaceComplexity": "O(1)",
+      "hints": [
+        "Repeatedly take n % 10 (last digit) and then n = n // 10.",
+        "Handle 0 separately: the loop never runs, so the answer stays 0."
+      ]
+    },
+    {
+      "id": "code-med-two-sum",
+      "title": "Two Sum",
+      "difficulty": "medium",
+      "topic": "Hashing",
+      "description": "Given an array and a target value, find two distinct indices i, j (i < j) such that nums[i] + nums[j] = target. Exactly one solution exists.",
+      "inputFormat": "First line: integer n. Second line: n space-separated integers. Third line: integer target.",
+      "outputFormat": "Print the two indices i and j, space-separated, with i < j.",
+      "constraints": "2 <= n <= 10^5, -10^9 <= element, target <= 10^9, exactly one solution",
+      "examples": [
+        {
+          "input": "4\n2 7 11 15\n9",
+          "output": "0 1"
+        },
+        {
+          "input": "3\n3 2 4\n6",
+          "output": "1 2"
+        },
+        {
+          "input": "2\n3 3\n6",
+          "output": "0 1"
+        }
+      ],
+      "tests": [
+        {
+          "input": "5\n1 2 3 4 5\n9",
+          "output": "3 4",
+          "hidden": true
+        },
+        {
+          "input": "4\n0 4 3 0\n0",
+          "output": "0 3",
+          "hidden": true
+        },
+        {
+          "input": "4\n-1 -2 -3 -4\n-6",
+          "output": "1 3",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    # TODO: print indices i j with nums[i] + nums[j] == target\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return 'i j' with nums[i] + nums[j] == target\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    n = int(data[0])\n    nums = list(map(int, data[1:1 + n]))\n    target = int(data[1 + n])\n    seen = {}\n    for i, x in enumerate(nums):\n        need = target - x\n        if need in seen:\n            print(f'{seen[need]} {i}')\n            return\n        seen[x] = i\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "For each element x, check whether target - x was seen before.",
+        "Store each value's index in a hash map as you scan left to right."
+      ]
+    },
+    {
+      "id": "code-med-remove-dups",
+      "title": "Remove Duplicates from Sorted Array",
+      "difficulty": "medium",
+      "topic": "Two Pointers",
+      "description": "Given a sorted array, remove the duplicates in place (conceptually) and print the array with each distinct value appearing once, in order.",
+      "inputFormat": "First line: integer n. Second line: n space-separated integers in non-decreasing order.",
+      "outputFormat": "Print the deduplicated array, space-separated. Print an empty line when n = 0.",
+      "constraints": "0 <= n <= 10^5, values are sorted non-decreasing",
+      "examples": [
+        {
+          "input": "5\n1 1 2 2 3",
+          "output": "1 2 3"
+        },
+        {
+          "input": "6\n0 0 1 1 1 2",
+          "output": "0 1 2"
+        },
+        {
+          "input": "1\n5",
+          "output": "5"
+        }
+      ],
+      "tests": [
+        {
+          "input": "3\n1 2 3",
+          "output": "1 2 3",
+          "hidden": true
+        },
+        {
+          "input": "3\n2 2 2",
+          "output": "2",
+          "hidden": true
+        },
+        {
+          "input": "5\n-1 -1 0 1 1",
+          "output": "-1 0 1",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    # TODO: print the sorted array without duplicates\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the deduplicated array, space-separated\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    if not data:\n        print('')\n        return\n    n = int(data[0])\n    arr = list(map(int, data[1:1 + n]))\n    out = []\n    for x in arr:\n        if not out or out[-1] != x:\n            out.append(x)\n    print(' '.join(map(str, out)))\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "Because the input is sorted, duplicates are adjacent.",
+        "Keep a write pointer: copy an element only when it differs from the previous kept one."
+      ]
+    },
+    {
+      "id": "code-med-pair-sum",
+      "title": "Pair with Given Sum",
+      "difficulty": "medium",
+      "topic": "Two Pointers",
+      "description": "Given an array and a target value, determine whether any two distinct elements sum to the target.",
+      "inputFormat": "First line: integer n. Second line: n space-separated integers. Third line: integer target.",
+      "outputFormat": "Print 'YES' if such a pair exists, otherwise 'NO'.",
+      "constraints": "2 <= n <= 10^5, -10^9 <= element, target <= 10^9",
+      "examples": [
+        {
+          "input": "4\n1 2 3 4\n8",
+          "output": "NO"
+        },
+        {
+          "input": "4\n1 2 3 4\n7",
+          "output": "YES"
+        },
+        {
+          "input": "1\n5\n10",
+          "output": "NO"
+        }
+      ],
+      "tests": [
+        {
+          "input": "3\n10 20 30\n50",
+          "output": "YES",
+          "hidden": true
+        },
+        {
+          "input": "3\n1 1 1\n2",
+          "output": "YES",
+          "hidden": true
+        },
+        {
+          "input": "2\n3 3\n7",
+          "output": "NO",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    # TODO: print YES if any two distinct elements sum to target\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return 'YES' or 'NO'\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    n = int(data[0])\n    arr = list(map(int, data[1:1 + n]))\n    target = int(data[1 + n])\n    seen = set()\n    for x in arr:\n        if target - x in seen:\n            print('YES')\n            return\n        seen.add(x)\n    print('NO')\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "This is the existence version of Two Sum: a hash set is enough.",
+        "If the array were sorted, two pointers from both ends would use O(1) space."
+      ]
+    },
+    {
+      "id": "code-med-max-avg",
+      "title": "Maximum Average Subarray of Size K",
+      "difficulty": "medium",
+      "topic": "Sliding Window",
+      "description": "Given an array and an integer k, find the maximum average of any contiguous subarray of length exactly k.",
+      "inputFormat": "First line: two integers n and k. Second line: n space-separated integers.",
+      "outputFormat": "Print the maximum average rounded to 2 decimal places.",
+      "constraints": "1 <= k <= n <= 10^5, -10^4 <= element <= 10^4",
+      "examples": [
+        {
+          "input": "6 4\n1 12 -5 -6 50 3",
+          "output": "12.75"
+        },
+        {
+          "input": "4 2\n5 5 5 5",
+          "output": "5.00"
+        },
+        {
+          "input": "5 2\n1 2 3 4 5",
+          "output": "4.50"
+        }
+      ],
+      "tests": [
+        {
+          "input": "3 3\n10 20 30",
+          "output": "20.00",
+          "hidden": true
+        },
+        {
+          "input": "4 2\n-1 -2 -3 -4",
+          "output": "-1.50",
+          "hidden": true
+        },
+        {
+          "input": "5 3\n7 1 7 1 7",
+          "output": "5.00",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    # TODO: print the maximum average of any length-k window, 2 decimals\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the maximum average, 2 decimals\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    n, k = int(data[0]), int(data[1])\n    arr = list(map(int, data[2:2 + n]))\n    window = sum(arr[:k])\n    best = window\n    for i in range(k, n):\n        window += arr[i] - arr[i - k]\n        best = max(best, window)\n    print(f'{best / k:.2f}')\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "hints": [
+        "Slide a window of size k: add the new element, subtract the one that leaves.",
+        "Track the maximum window SUM, then divide by k once at the end."
+      ]
+    },
+    {
+      "id": "code-med-longest-substring",
+      "title": "Longest Substring Without Repeating Characters",
+      "difficulty": "medium",
+      "topic": "Sliding Window",
+      "description": "Given a string, find the length of the longest substring that contains no repeating characters.",
+      "inputFormat": "A single line containing the string (letters and digits; may be empty).",
+      "outputFormat": "Print the length of the longest substring without repeating characters.",
+      "constraints": "0 <= length <= 10^5",
+      "examples": [
+        {
+          "input": "abcabcbb",
+          "output": "3"
+        },
+        {
+          "input": "bbbbb",
+          "output": "1"
+        },
+        {
+          "input": "pwwkew",
+          "output": "3"
+        }
+      ],
+      "tests": [
+        {
+          "input": "",
+          "output": "0",
+          "hidden": true
+        },
+        {
+          "input": "abcdef",
+          "output": "6",
+          "hidden": true
+        },
+        {
+          "input": "abba",
+          "output": "2",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    s = sys.stdin.readline().rstrip('\\n')\n    # TODO: print the longest repeat-free substring length\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the longest repeat-free substring length\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    s = sys.stdin.readline().rstrip('\\n')\n    last = {}\n    start = best = 0\n    for i, ch in enumerate(s):\n        if ch in last and last[ch] >= start:\n            start = last[ch] + 1\n        last[ch] = i\n        best = max(best, i - start + 1)\n    print(best)\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(min(n, alphabet))",
+      "hints": [
+        "Sliding window: expand right, and when a repeat appears, jump the left edge past its previous occurrence.",
+        "Keep a map of each character's last index."
+      ]
+    },
+    {
+      "id": "code-med-all-anagrams",
+      "title": "Find All Anagrams in a String",
+      "difficulty": "medium",
+      "topic": "Sliding Window",
+      "description": "Given strings s and p (lowercase letters), find all starting indices of anagrams of p in s.",
+      "inputFormat": "Two lines: string s, then string p.",
+      "outputFormat": "Print the starting indices space-separated. Print -1 if there are none.",
+      "constraints": "1 <= len(p) <= len(s) <= 10^5, or len(p) > len(s) is allowed (answer -1)",
+      "examples": [
+        {
+          "input": "cbaebabacd\nabc",
+          "output": "0 6"
+        },
+        {
+          "input": "abab\nab",
+          "output": "0 1 2"
+        },
+        {
+          "input": "abc\nd",
+          "output": "-1"
+        }
+      ],
+      "tests": [
+        {
+          "input": "aaaa\naa",
+          "output": "0 1 2",
+          "hidden": true
+        },
+        {
+          "input": "abcd\nbc",
+          "output": "1",
+          "hidden": true
+        },
+        {
+          "input": "abc\nabcd",
+          "output": "-1",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().splitlines()\n    # TODO: print start indices of anagrams of p in s, or -1\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return anagram start indices, or -1\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    from collections import Counter\n    lines = sys.stdin.read().splitlines()\n    s = lines[0] if len(lines) > 0 else ''\n    p = lines[1] if len(lines) > 1 else ''\n    if len(p) > len(s) or not p:\n        print(-1)\n        return\n    need = Counter(p)\n    window = Counter(s[:len(p)])\n    out = []\n    if window == need:\n        out.append(0)\n    for i in range(len(p), len(s)):\n        out_ch, in_ch = s[i - len(p)], s[i]\n        window[out_ch] -= 1\n        if window[out_ch] == 0:\n            del window[out_ch]\n        window[in_ch] += 1\n        if window == need:\n            out.append(i - len(p) + 1)\n    print(' '.join(map(str, out)) if out else -1)\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "hints": [
+        "Slide a window of length len(p) over s and compare character counts.",
+        "Update counts incrementally when the window moves instead of recounting."
+      ]
+    },
+    {
+      "id": "code-med-longest-consecutive",
+      "title": "Longest Consecutive Sequence",
+      "difficulty": "medium",
+      "topic": "Hashing",
+      "description": "Given an unsorted array, find the length of the longest sequence of consecutive integers present in it. The sequence need not be contiguous in the array.",
+      "inputFormat": "First line: integer n. Second line: n space-separated integers.",
+      "outputFormat": "Print the length of the longest consecutive sequence.",
+      "constraints": "0 <= n <= 10^5, -10^9 <= element <= 10^9",
+      "examples": [
+        {
+          "input": "6\n100 4 200 1 3 2",
+          "output": "4"
+        },
+        {
+          "input": "10\n0 3 7 2 5 8 4 6 0 1",
+          "output": "9"
+        },
+        {
+          "input": "1\n1",
+          "output": "1"
+        }
+      ],
+      "tests": [
+        {
+          "input": "5\n5 4 3 2 1",
+          "output": "5",
+          "hidden": true
+        },
+        {
+          "input": "3\n10 20 30",
+          "output": "1",
+          "hidden": true
+        },
+        {
+          "input": "4\n1 2 0 1",
+          "output": "3",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    # TODO: print the longest consecutive sequence length\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the longest consecutive sequence length\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    if not data:\n        print(0)\n        return\n    n = int(data[0])\n    nums = set(map(int, data[1:1 + n]))\n    best = 0\n    for x in nums:\n        if x - 1 not in nums:            # only start counting at sequence starts\n            length, cur = 1, x\n            while cur + 1 in nums:\n                cur += 1\n                length += 1\n            best = max(best, length)\n    print(best)\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "Put the numbers in a set for O(1) lookups.",
+        "Only start counting from numbers whose predecessor is missing - that keeps the total work O(n)."
+      ]
+    },
+    {
+      "id": "code-med-nearby-duplicates",
+      "title": "Contains Duplicate II (Nearby Duplicates)",
+      "difficulty": "medium",
+      "topic": "Hashing",
+      "description": "Given an array and an integer k, determine whether there are two distinct indices i, j with nums[i] == nums[j] and |i - j| <= k.",
+      "inputFormat": "First line: two integers n and k. Second line: n space-separated integers.",
+      "outputFormat": "Print 'true' if such a pair exists, otherwise 'false' (all lowercase).",
+      "constraints": "1 <= n <= 10^5, 0 <= k <= 10^5",
+      "examples": [
+        {
+          "input": "4 3\n1 2 3 1",
+          "output": "true"
+        },
+        {
+          "input": "4 1\n1 0 1 1",
+          "output": "true"
+        },
+        {
+          "input": "4 2\n1 2 3 4",
+          "output": "false"
+        }
+      ],
+      "tests": [
+        {
+          "input": "6 2\n1 2 3 1 2 3",
+          "output": "false",
+          "hidden": true
+        },
+        {
+          "input": "2 1\n99 99",
+          "output": "true",
+          "hidden": true
+        },
+        {
+          "input": "3 1\n1 2 1",
+          "output": "false",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    # TODO: print 'true' if a duplicate exists within distance k\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return 'true' or 'false'\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    n, k = int(data[0]), int(data[1])\n    arr = list(map(int, data[2:2 + n]))\n    last = {}\n    for i, x in enumerate(arr):\n        if x in last and i - last[x] <= k:\n            print('true')\n            return\n        last[x] = i\n    print('false')\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "Remember the most recent index of each value.",
+        "A duplicate counts only when the distance to its previous occurrence is at most k."
+      ]
+    },
+    {
+      "id": "code-med-count-subarrays",
+      "title": "Count Subarrays with Sum K",
+      "difficulty": "medium",
+      "topic": "Hashing",
+      "description": "Given an array and an integer k, count the number of contiguous subarrays whose elements sum to k.",
+      "inputFormat": "First line: integer n. Second line: n space-separated integers. Third line: integer k.",
+      "outputFormat": "Print the count of subarrays summing to k.",
+      "constraints": "1 <= n <= 10^5, -1000 <= element <= 1000, -10^7 <= k <= 10^7",
+      "examples": [
+        {
+          "input": "3\n1 1 1\n2",
+          "output": "2"
+        },
+        {
+          "input": "3\n1 2 3\n3",
+          "output": "2"
+        },
+        {
+          "input": "3\n1 -1 0\n0",
+          "output": "3"
+        }
+      ],
+      "tests": [
+        {
+          "input": "8\n3 4 -7 1 3 3 1 -4\n7",
+          "output": "4",
+          "hidden": true
+        },
+        {
+          "input": "3\n0 0 0\n0",
+          "output": "6",
+          "hidden": true
+        },
+        {
+          "input": "1\n5\n5",
+          "output": "1",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    # TODO: print the number of subarrays summing to k\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the count of subarrays summing to k\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    from collections import defaultdict\n    data = sys.stdin.read().strip().split()\n    n = int(data[0])\n    arr = list(map(int, data[1:1 + n]))\n    k = int(data[1 + n])\n    prefix_counts = defaultdict(int)\n    prefix_counts[0] = 1\n    prefix = count = 0\n    for x in arr:\n        prefix += x\n        count += prefix_counts[prefix - k]\n        prefix_counts[prefix] += 1\n    print(count)\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "A subarray (l..r) sums to k exactly when prefix[r] - prefix[l-1] = k.",
+        "Count how many previous prefix sums equal prefix - k as you scan."
+      ]
+    },
+    {
+      "id": "code-hard-valid-parens",
+      "title": "Valid Parentheses",
+      "difficulty": "hard",
+      "topic": "Stack",
+      "description": "Given a string containing only '(', ')', '{', '}', '[' and ']', determine whether the brackets are correctly matched and properly nested.",
+      "inputFormat": "A single line containing the bracket string (may be empty).",
+      "outputFormat": "Print 'true' if the string is valid, otherwise 'false' (all lowercase).",
+      "constraints": "0 <= length <= 10^4",
+      "examples": [
+        {
+          "input": "()[]{}",
+          "output": "true"
+        },
+        {
+          "input": "(]",
+          "output": "false"
+        },
+        {
+          "input": "([)]",
+          "output": "false"
+        }
+      ],
+      "tests": [
+        {
+          "input": "{[]}",
+          "output": "true",
+          "hidden": true
+        },
+        {
+          "input": "",
+          "output": "true",
+          "hidden": true
+        },
+        {
+          "input": "(((",
+          "output": "false",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    s = sys.stdin.readline().strip()\n    # TODO: print 'true' if brackets are valid\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return 'true' if brackets are valid\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    s = sys.stdin.readline().strip()\n    pairs = {')': '(', ']': '[', '}': '{'}\n    stack = []\n    for ch in s:\n        if ch in '([{':\n            stack.append(ch)\n        else:\n            if not stack or stack.pop() != pairs[ch]:\n                print('false')\n                return\n    print('true' if not stack else 'false')\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "Push opening brackets; on a closing bracket, the top of the stack must match.",
+        "The string is valid only if the stack is empty at the end."
+      ]
+    },
+    {
+      "id": "code-hard-min-stack",
+      "title": "Min Stack",
+      "difficulty": "hard",
+      "topic": "Stack",
+      "description": "Design a stack supporting push(x), pop(), top() and getMin() (the minimum element) in constant time. Process a sequence of operations and print the result of each top/getMin operation.",
+      "inputFormat": "First line: integer q (number of operations). Next q lines, one operation each: 'push x', 'pop', 'top' or 'getMin'. pop is only called on a non-empty stack.",
+      "outputFormat": "For each 'top' and 'getMin' operation, print its result on its own line.",
+      "constraints": "1 <= q <= 10^5, -2^31 <= x <= 2^31 - 1",
+      "examples": [
+        {
+          "input": "7\npush -2\npush 0\npush -3\ngetMin\npop\ntop\ngetMin",
+          "output": "-3\n0\n-2"
+        },
+        {
+          "input": "5\npush 5\npush 2\ngetMin\npop\ngetMin",
+          "output": "2\n5"
+        },
+        {
+          "input": "4\npush 1\npush 2\ntop\ngetMin",
+          "output": "2\n1"
+        }
+      ],
+      "tests": [
+        {
+          "input": "6\npush 3\npush 1\npush 2\ngetMin\npop\ngetMin",
+          "output": "1\n1",
+          "hidden": true
+        },
+        {
+          "input": "3\npush 10\ngetMin\ntop",
+          "output": "10\n10",
+          "hidden": true
+        },
+        {
+          "input": "8\npush 5\npush 4\npush 4\ngetMin\npop\ngetMin\npop\ngetMin",
+          "output": "4\n4\n5",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().strip().splitlines()\n    # TODO: implement a min stack and print top/getMin results\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: implement a min stack, return one result per line\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().strip().splitlines()\n    q = int(lines[0]) if lines else 0\n    stack, mins = [], []\n    out = []\n    for line in lines[1:1 + q]:\n        parts = line.split()\n        if parts[0] == 'push':\n            x = int(parts[1])\n            stack.append(x)\n            mins.append(x if not mins else min(x, mins[-1]))\n        elif parts[0] == 'pop':\n            stack.pop()\n            mins.pop()\n        elif parts[0] == 'top':\n            out.append(str(stack[-1]))\n        elif parts[0] == 'getMin':\n            out.append(str(mins[-1]))\n    print('\\n'.join(out))\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(1) amortised per operation",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "Keep a parallel stack of running minimums, one entry per pushed element.",
+        "On pop, discard the top of both stacks."
+      ]
+    },
+    {
+      "id": "code-hard-next-greater",
+      "title": "Next Greater Element",
+      "difficulty": "hard",
+      "topic": "Stack",
+      "description": "For each element of an array, find the first element to its right that is strictly greater. If none exists, use -1.",
+      "inputFormat": "First line: integer n. Second line: n space-separated integers.",
+      "outputFormat": "Print the next greater element for each position, space-separated.",
+      "constraints": "1 <= n <= 10^5, -10^9 <= element <= 10^9",
+      "examples": [
+        {
+          "input": "4\n4 5 2 25",
+          "output": "5 25 25 -1"
+        },
+        {
+          "input": "4\n13 7 6 12",
+          "output": "-1 12 12 -1"
+        },
+        {
+          "input": "3\n1 2 3",
+          "output": "2 3 -1"
+        }
+      ],
+      "tests": [
+        {
+          "input": "5\n5 4 3 2 1",
+          "output": "-1 -1 -1 -1 -1",
+          "hidden": true
+        },
+        {
+          "input": "3\n3 3 3",
+          "output": "-1 -1 -1",
+          "hidden": true
+        },
+        {
+          "input": "1\n1",
+          "output": "-1",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    # TODO: print the next greater element for each position\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return next greater elements, space-separated\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    data = sys.stdin.read().strip().split()\n    n = int(data[0])\n    arr = list(map(int, data[1:1 + n]))\n    res = [-1] * n\n    stack = []\n    for i in range(n - 1, -1, -1):\n        while stack and stack[-1] <= arr[i]:\n            stack.pop()\n        if stack:\n            res[i] = stack[-1]\n        stack.append(arr[i])\n    print(' '.join(map(str, res)))\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "Scan from right to left with a monotonic decreasing stack.",
+        "Pop elements that are smaller or equal - they can never be anyone's next greater."
+      ]
+    },
+    {
+      "id": "code-hard-queue-stacks",
+      "title": "Implement Queue using Stacks",
+      "difficulty": "hard",
+      "topic": "Queue",
+      "description": "Implement a FIFO queue using two stacks. Process a sequence of operations and print the result of each pop/peek/empty operation.",
+      "inputFormat": "First line: integer q. Next q lines, one operation each: 'push x', 'pop', 'peek' or 'empty'. pop/peek are only called on a non-empty queue.",
+      "outputFormat": "For 'pop' print the removed value, for 'peek' print the front value, for 'empty' print 'true' or 'false' - each on its own line.",
+      "constraints": "1 <= q <= 10^5, -2^31 <= x <= 2^31 - 1",
+      "examples": [
+        {
+          "input": "6\npush 1\npush 2\npeek\npop\npeek\nempty",
+          "output": "1\n1\n2\nfalse"
+        },
+        {
+          "input": "5\npush 5\npop\nempty\npush 9\npeek",
+          "output": "5\ntrue\n9"
+        },
+        {
+          "input": "3\npush 1\npush 2\npop",
+          "output": "1"
+        }
+      ],
+      "tests": [
+        {
+          "input": "4\npush 3\npush 4\npop\npop",
+          "output": "3\n4",
+          "hidden": true
+        },
+        {
+          "input": "3\nempty\npush 7\npeek",
+          "output": "true\n7",
+          "hidden": true
+        },
+        {
+          "input": "6\npush 1\npush 2\npush 3\npop\npop\npeek",
+          "output": "1\n2\n3",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().strip().splitlines()\n    # TODO: implement a queue with two stacks\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: implement a queue with two stacks, one result per line\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().strip().splitlines()\n    q = int(lines[0]) if lines else 0\n    in_stack, out_stack = [], []\n    out = []\n\n    def transfer():\n        while in_stack:\n            out_stack.append(in_stack.pop())\n\n    for line in lines[1:1 + q]:\n        parts = line.split()\n        if parts[0] == 'push':\n            in_stack.append(int(parts[1]))\n        elif parts[0] == 'pop':\n            if not out_stack:\n                transfer()\n            out.append(str(out_stack.pop()))\n        elif parts[0] == 'peek':\n            if not out_stack:\n                transfer()\n            out.append(str(out_stack[-1]))\n        elif parts[0] == 'empty':\n            out.append('true' if not in_stack and not out_stack else 'false')\n    print('\\n'.join(out))\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(1) amortised per operation",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "Push onto stack A; pop/peek from stack B, refilling B from A (reversed) only when B is empty.",
+        "Refilling reverses the order, which is exactly what turns LIFO into FIFO."
+      ]
+    },
+    {
+      "id": "code-hard-stack-queues",
+      "title": "Implement Stack using Queues",
+      "difficulty": "hard",
+      "topic": "Stack",
+      "description": "Implement a LIFO stack using queues. Process a sequence of operations and print the result of each pop/top/empty operation.",
+      "inputFormat": "First line: integer q. Next q lines, one operation each: 'push x', 'pop', 'top' or 'empty'. pop/top are only called on a non-empty stack.",
+      "outputFormat": "For 'pop' print the removed value, for 'top' print the top value, for 'empty' print 'true' or 'false' - each on its own line.",
+      "constraints": "1 <= q <= 10^5, -2^31 <= x <= 2^31 - 1",
+      "examples": [
+        {
+          "input": "6\npush 1\npush 2\ntop\npop\ntop\nempty",
+          "output": "2\n2\n1\nfalse"
+        },
+        {
+          "input": "5\npush 7\npop\nempty\npush 3\ntop",
+          "output": "7\ntrue\n3"
+        },
+        {
+          "input": "3\npush 1\npush 2\npop",
+          "output": "2"
+        }
+      ],
+      "tests": [
+        {
+          "input": "5\npush 4\npush 5\npop\npop\nempty",
+          "output": "5\n4\ntrue",
+          "hidden": true
+        },
+        {
+          "input": "3\nempty\npush 1\ntop",
+          "output": "true\n1",
+          "hidden": true
+        },
+        {
+          "input": "7\npush 1\npush 2\npush 3\ntop\npop\ntop\nempty",
+          "output": "3\n3\n2\nfalse",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().strip().splitlines()\n    # TODO: implement a stack with queues\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: implement a stack with queues, one result per line\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    from collections import deque\n    lines = sys.stdin.read().strip().splitlines()\n    q = int(lines[0]) if lines else 0\n    q1, q2 = deque(), deque()\n    out = []\n    for line in lines[1:1 + q]:\n        parts = line.split()\n        if parts[0] == 'push':\n            q1.append(int(parts[1]))\n        elif parts[0] == 'pop':\n            while len(q1) > 1:\n                q2.append(q1.popleft())\n            out.append(str(q1.popleft()))\n            q1, q2 = q2, q1\n        elif parts[0] == 'top':\n            while len(q1) > 1:\n                q2.append(q1.popleft())\n            out.append(str(q1[0]))\n            q2.append(q1.popleft())\n            q1, q2 = q2, q1\n        elif parts[0] == 'empty':\n            out.append('true' if not q1 else 'false')\n    print('\\n'.join(out))\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n) per pop/top, O(1) per push",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "To pop, move everything except the last element to the second queue, then take the last.",
+        "For top, do the same but put the last element back."
+      ]
+    },
+    {
+      "id": "code-hard-reverse-ll",
+      "title": "Reverse Linked List",
+      "difficulty": "hard",
+      "topic": "Linked List",
+      "description": "Given a linked list as a space-separated sequence of values, print the values in reverse order. (Input format: values in list order; the list is empty when the input is empty.)",
+      "inputFormat": "One line of space-separated integers, in list order. The line may be empty for an empty list.",
+      "outputFormat": "Print the values in reverse order, space-separated. Print an empty line for an empty list.",
+      "constraints": "0 <= length <= 10^5, -10^9 <= value <= 10^9",
+      "examples": [
+        {
+          "input": "1 2 3 4 5",
+          "output": "5 4 3 2 1"
+        },
+        {
+          "input": "1",
+          "output": "1"
+        },
+        {
+          "input": "1 2",
+          "output": "2 1"
+        }
+      ],
+      "tests": [
+        {
+          "input": "10 20 30",
+          "output": "30 20 10",
+          "hidden": true
+        },
+        {
+          "input": "5 5 5",
+          "output": "5 5 5",
+          "hidden": true
+        },
+        {
+          "input": "",
+          "output": "",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    line = sys.stdin.readline().strip()\n    # TODO: print the list reversed\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the list reversed, space-separated\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    line = sys.stdin.readline().strip()\n    vals = list(map(int, line.split())) if line else []\n    print(' '.join(map(str, reversed(vals))))\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "Iteratively rewire: prev = None; for each node, save next, point node.next to prev, advance.",
+        "With a real linked list this is O(1) extra space."
+      ]
+    },
+    {
+      "id": "code-hard-detect-cycle",
+      "title": "Detect Cycle in Linked List",
+      "difficulty": "hard",
+      "topic": "Linked List",
+      "description": "A linked list is given as space-separated values, plus an integer pos: the 0-based index of the node the tail connects back to, or -1 if the tail connects to nothing. Determine whether the list has a cycle.",
+      "inputFormat": "First line: space-separated integers (the list values). Second line: integer pos (-1 means no cycle).",
+      "outputFormat": "Print 'true' if the list has a cycle, otherwise 'false' (all lowercase).",
+      "constraints": "0 <= length <= 10^4, -1 <= pos < length",
+      "examples": [
+        {
+          "input": "3 2 0 -4\n1",
+          "output": "true"
+        },
+        {
+          "input": "1 2\n-1",
+          "output": "false"
+        },
+        {
+          "input": "1\n0",
+          "output": "true"
+        }
+      ],
+      "tests": [
+        {
+          "input": "1 2 3\n0",
+          "output": "true",
+          "hidden": true
+        },
+        {
+          "input": "1 2 3 4\n-1",
+          "output": "false",
+          "hidden": true
+        },
+        {
+          "input": "5\n-1",
+          "output": "false",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().splitlines()\n    # TODO: print 'true' if pos != -1 (and the list is non-empty)\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return 'true' if the list has a cycle\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().splitlines()\n    vals = list(map(int, lines[0].split())) if lines and lines[0].strip() else []\n    pos = int(lines[1]) if len(lines) > 1 else -1\n    print('true' if vals and pos != -1 else 'false')\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "hints": [
+        "With real nodes, use Floyd's tortoise and hare: if fast meets slow, there is a cycle.",
+        "Here pos != -1 directly means the tail links back, which is exactly a cycle."
+      ]
+    },
+    {
+      "id": "code-hard-middle-ll",
+      "title": "Middle of Linked List",
+      "difficulty": "hard",
+      "topic": "Linked List",
+      "description": "Given a non-empty linked list as space-separated values, print the value of the middle node. For an even-length list, print the second middle node.",
+      "inputFormat": "One line of space-separated integers (non-empty list).",
+      "outputFormat": "Print the middle node's value.",
+      "constraints": "1 <= length <= 10^5, -10^9 <= value <= 10^9",
+      "examples": [
+        {
+          "input": "1 2 3 4 5",
+          "output": "3"
+        },
+        {
+          "input": "1 2 3 4",
+          "output": "3"
+        },
+        {
+          "input": "1",
+          "output": "1"
+        }
+      ],
+      "tests": [
+        {
+          "input": "1 2",
+          "output": "2",
+          "hidden": true
+        },
+        {
+          "input": "10 20 30 40 50 60",
+          "output": "40",
+          "hidden": true
+        },
+        {
+          "input": "7 7 7",
+          "output": "7",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    line = sys.stdin.readline().strip()\n    # TODO: print the middle value (second middle for even length)\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the middle value\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    line = sys.stdin.readline().strip()\n    vals = list(map(int, line.split()))\n    # slow/fast pointers over indices: fast advances 2, slow 1;\n    # index len//2 is exactly where slow lands (second middle for even lists)\n    print(vals[len(vals) // 2])\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "hints": [
+        "Slow/fast pointers: fast moves two steps, slow one; when fast ends, slow is at the middle.",
+        "For even lengths this lands on the second middle node."
+      ]
+    },
+    {
+      "id": "code-hard-merge-ll",
+      "title": "Merge Two Sorted Linked Lists",
+      "difficulty": "hard",
+      "topic": "Linked List",
+      "description": "Given two sorted linked lists as space-separated values (one per line), merge them into one sorted list.",
+      "inputFormat": "Two lines: the first sorted list, then the second sorted list. Either line may be empty for an empty list.",
+      "outputFormat": "Print the merged sorted list, space-separated. Print an empty line if both lists are empty.",
+      "constraints": "0 <= length of each list <= 10^5, values sorted non-decreasing",
+      "examples": [
+        {
+          "input": "1 2 4\n1 3 4",
+          "output": "1 1 2 3 4 4"
+        },
+        {
+          "input": "5\n",
+          "output": "5"
+        },
+        {
+          "input": "\n",
+          "output": ""
+        }
+      ],
+      "tests": [
+        {
+          "input": "1 3 5\n2 4 6",
+          "output": "1 2 3 4 5 6",
+          "hidden": true
+        },
+        {
+          "input": "\n1 2",
+          "output": "1 2",
+          "hidden": true
+        },
+        {
+          "input": "2 2\n2",
+          "output": "2 2 2",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().splitlines()\n    # TODO: merge the two sorted lists\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the merged sorted list, space-separated\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().splitlines()\n    a = list(map(int, lines[0].split())) if lines and lines[0].strip() else []\n    b = list(map(int, lines[1].split())) if len(lines) > 1 and lines[1].strip() else []\n    i = j = 0\n    out = []\n    while i < len(a) and j < len(b):\n        if a[i] <= b[j]:\n            out.append(a[i]); i += 1\n        else:\n            out.append(b[j]); j += 1\n    out.extend(a[i:]); out.extend(b[j:])\n    print(' '.join(map(str, out)))\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n + m)",
+      "spaceComplexity": "O(n + m)",
+      "hints": [
+        "Walk both lists with two pointers, always taking the smaller head.",
+        "When one list runs out, append the rest of the other."
+      ]
+    },
+    {
+      "id": "code-hard-remove-nth",
+      "title": "Remove Nth Node from End of List",
+      "difficulty": "hard",
+      "topic": "Linked List",
+      "description": "Given a linked list as space-separated values and an integer n, remove the nth node from the end and print the remaining list.",
+      "inputFormat": "First line: space-separated integers (the list). Second line: integer n (1 <= n <= length).",
+      "outputFormat": "Print the remaining list, space-separated. Print an empty line if the list becomes empty.",
+      "constraints": "1 <= length <= 10^5, 1 <= n <= length",
+      "examples": [
+        {
+          "input": "1 2 3 4 5\n2",
+          "output": "1 2 3 5"
+        },
+        {
+          "input": "1 2\n2",
+          "output": "2"
+        },
+        {
+          "input": "1 2 3\n3",
+          "output": "2 3"
+        }
+      ],
+      "tests": [
+        {
+          "input": "1\n1",
+          "output": "",
+          "hidden": true
+        },
+        {
+          "input": "1 2 3 4\n1",
+          "output": "1 2 3",
+          "hidden": true
+        },
+        {
+          "input": "5 6 7 8\n4",
+          "output": "6 7 8",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().splitlines()\n    # TODO: remove the nth node from the end and print the rest\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the list after removing the nth node from the end\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().splitlines()\n    vals = list(map(int, lines[0].split())) if lines and lines[0].strip() else []\n    n = int(lines[1]) if len(lines) > 1 else 1\n    idx = len(vals) - n\n    del vals[idx]\n    print(' '.join(map(str, vals)))\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "hints": [
+        "With real nodes, use two pointers n+1 apart: when the front pointer ends, the rear one is just before the target.",
+        "Removing the head is the special case handled by a dummy node."
+      ]
+    },
+    {
+      "id": "code-hard-reverse-k-group",
+      "title": "Reverse Nodes in K-Group",
+      "difficulty": "hard",
+      "topic": "Linked List",
+      "description": "Given a linked list as space-separated values and an integer k, reverse the nodes of the list k at a time. If the number of nodes is not a multiple of k, the remaining nodes stay in their original order.",
+      "inputFormat": "First line: space-separated integers (the list). Second line: integer k.",
+      "outputFormat": "Print the resulting list, space-separated. Print an empty line for an empty list.",
+      "constraints": "0 <= length <= 10^5, 1 <= k <= 10^5",
+      "examples": [
+        {
+          "input": "1 2 3 4 5\n2",
+          "output": "2 1 4 3 5"
+        },
+        {
+          "input": "1 2 3 4 5\n3",
+          "output": "3 2 1 4 5"
+        },
+        {
+          "input": "1 2 3\n1",
+          "output": "1 2 3"
+        }
+      ],
+      "tests": [
+        {
+          "input": "1 2 3 4 5 6\n3",
+          "output": "3 2 1 6 5 4",
+          "hidden": true
+        },
+        {
+          "input": "1 2\n3",
+          "output": "1 2",
+          "hidden": true
+        },
+        {
+          "input": "1 2 3 4\n4",
+          "output": "4 3 2 1",
+          "hidden": true
+        }
+      ],
+      "starterCode": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().splitlines()\n    # TODO: reverse in groups of k, leaving a short tail as-is\n\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "function solve(input) {\n  // TODO: return the list after reversing in k-groups\n  return '';\n}"
+      },
+      "referenceSolution": {
+        "python": "def solve():\n    import sys\n    lines = sys.stdin.read().splitlines()\n    vals = list(map(int, lines[0].split())) if lines and lines[0].strip() else []\n    k = int(lines[1]) if len(lines) > 1 else 1\n    out = []\n    for i in range(0, len(vals), k):\n        chunk = vals[i:i + k]\n        out.extend(reversed(chunk) if len(chunk) == k else chunk)\n    print(' '.join(map(str, out)))\n\n\nif __name__ == '__main__':\n    solve()"
+      },
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "hints": [
+        "Process the list in chunks of k, reversing each full chunk.",
+        "A final chunk smaller than k is left untouched."
+      ]
+    }
+  ]
+}

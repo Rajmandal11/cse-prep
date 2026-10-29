@@ -1,0 +1,1174 @@
+{
+  "subjects": [
+    {
+      "id": "dbms",
+      "name": "Database Management Systems",
+      "category": "Technical MCQs",
+      "code": "CSE-301",
+      "semester": 3
+    },
+    {
+      "id": "networks",
+      "name": "Computer Networks",
+      "category": "Technical MCQs",
+      "code": "CSE-303",
+      "semester": 3
+    },
+    {
+      "id": "webdev",
+      "name": "Web Development",
+      "category": "Technical MCQs",
+      "code": "CSE-501",
+      "semester": 5
+    },
+    {
+      "id": "os",
+      "name": "Operating Systems",
+      "category": "Technical MCQs",
+      "code": "CSE-302",
+      "semester": 3
+    },
+    {
+      "id": "pseudocode",
+      "name": "Technical Pseudocode",
+      "category": "Technical MCQs",
+      "code": "CSE-101",
+      "semester": 1
+    }
+  ],
+  "topics": [
+    {
+      "id": "dbms-keys",
+      "subjectId": "dbms",
+      "name": "Keys and Constraints",
+      "notes": "A candidate key uniquely identifies a tuple. The primary key is the candidate key chosen by the designer; alternate keys are the remaining candidates; a foreign key references the primary key of another table."
+    },
+    {
+      "id": "dbms-norm",
+      "subjectId": "dbms",
+      "name": "Normalization",
+      "notes": "1NF: atomic values. 2NF: 1NF plus no partial dependency on any part of a composite key. 3NF: 2NF plus no transitive dependency. BCNF: every determinant is a superkey."
+    },
+    {
+      "id": "dbms-fd",
+      "subjectId": "dbms",
+      "name": "Functional Dependencies",
+      "notes": "X -> Y means X determines Y. The closure X+ is all attributes reachable from X by repeatedly applying the FDs. A candidate key is a minimal set whose closure is the whole relation."
+    },
+    {
+      "id": "dbms-sql",
+      "subjectId": "dbms",
+      "name": "SQL Queries",
+      "notes": "WHERE filters rows before grouping; HAVING filters groups after GROUP BY. Aggregate functions ignore NULL except COUNT(*). Subqueries in WHERE can compare against a scalar result."
+    },
+    {
+      "id": "dbms-joins",
+      "subjectId": "dbms",
+      "name": "Joins and Subqueries",
+      "notes": "INNER JOIN returns only matching rows. LEFT JOIN returns every left row, padding unmatched rows with NULL. A scalar subquery returns one value and can be used with comparison operators."
+    },
+    {
+      "id": "dbms-txn",
+      "subjectId": "dbms",
+      "name": "Transactions and ACID Properties",
+      "notes": "Atomicity: all-or-nothing. Consistency: valid state to valid state. Isolation: concurrent transactions appear serial. Durability: committed changes survive crashes."
+    },
+    {
+      "id": "dbms-conc",
+      "subjectId": "dbms",
+      "name": "Concurrency Control",
+      "notes": "Lost update: two transactions read the same value and both write back, so one update is lost. Dirty read: reading uncommitted data. Two-phase locking and timestamps prevent these anomalies."
+    },
+    {
+      "id": "dbms-index",
+      "subjectId": "dbms",
+      "name": "Indexing",
+      "notes": "A B+ tree keeps keys sorted, so it supports both equality lookups and range scans in O(log n). Hash indexes support only equality lookups. A clustered index determines physical row order."
+    },
+    {
+      "id": "dbms-er",
+      "subjectId": "dbms",
+      "name": "ER Diagrams",
+      "notes": "Rectangles are entities, ellipses are attributes, diamonds are relationships, lines link them. A double diamond marks a weak entity's identifying relationship; a double rectangle marks a weak entity."
+    },
+    {
+      "id": "dbms-rec",
+      "subjectId": "dbms",
+      "name": "Database Recovery",
+      "notes": "Write-ahead logging (WAL): the log record for a change must reach stable storage BEFORE the changed data page is written to disk, so a crash can always be undone or redone from the log."
+    },
+    {
+      "id": "net-osi",
+      "subjectId": "networks",
+      "name": "OSI Model",
+      "notes": "Layers 7 to 1: Application, Presentation, Session, Transport, Network, Data Link, Physical. Transport gives end-to-end delivery; Network gives host-to-host routing; Data Link gives node-to-node delivery."
+    },
+    {
+      "id": "net-tcp",
+      "subjectId": "networks",
+      "name": "TCP and UDP",
+      "notes": "TCP is connection-oriented, reliable, ordered, and flow/congestion controlled. UDP is connectionless, unreliable, and has minimal overhead, so it suits DNS, video streaming, and gaming."
+    },
+    {
+      "id": "net-ip",
+      "subjectId": "networks",
+      "name": "IP Addressing",
+      "notes": "Class A: 0-127, mask 255.0.0.0. Class B: 128-191, mask 255.255.0.0. Class C: 192-223, mask 255.255.255.0. Private ranges: 10/8, 172.16/12, 192.168/16."
+    },
+    {
+      "id": "net-subnet",
+      "subjectId": "networks",
+      "name": "Subnetting",
+      "notes": "A /p prefix leaves 32-p host bits: 2^(32-p) addresses, minus network and broadcast = usable hosts. Borrowing b bits from the host part creates 2^b subnets."
+    },
+    {
+      "id": "net-dns",
+      "subjectId": "networks",
+      "name": "DNS",
+      "notes": "DNS maps names to IP addresses. Queries normally use UDP port 53 (TCP 53 is used for zone transfers and large responses). Resolution goes: cache, recursive resolver, root, TLD, authoritative server."
+    },
+    {
+      "id": "net-http",
+      "subjectId": "networks",
+      "name": "HTTP and HTTPS",
+      "notes": "HTTP default port 80, HTTPS default port 443. HTTPS is HTTP over TLS, giving encryption, integrity, and server authentication. HTTP methods: GET, POST, PUT, DELETE, PATCH, HEAD."
+    },
+    {
+      "id": "net-cong",
+      "subjectId": "networks",
+      "name": "Flow Control and Congestion Control",
+      "notes": "Flow control (receiver window) protects the receiver. Congestion control (slow start, congestion avoidance, fast retransmit) protects the network. In slow start the congestion window doubles every RTT until the threshold."
+    },
+    {
+      "id": "net-error",
+      "subjectId": "networks",
+      "name": "Error Detection",
+      "notes": "Parity detects odd numbers of bit errors. CRC detects burst errors with high probability. Hamming distance d: detection of up to d-1 errors, correction of up to floor((d-1)/2) errors."
+    },
+    {
+      "id": "net-devices",
+      "subjectId": "networks",
+      "name": "Network Devices",
+      "notes": "Hub: Layer 1, repeats everything. Switch: Layer 2, forwards by MAC address. Router: Layer 3, forwards by IP address between networks. Gateway: connects networks using different protocols."
+    },
+    {
+      "id": "web-html",
+      "subjectId": "webdev",
+      "name": "HTML",
+      "notes": "The <a> tag with href creates a hyperlink. Semantic tags: <header>, <nav>, <main>, <article>, <section>, <footer>. <link> in <head> loads external resources like stylesheets."
+    },
+    {
+      "id": "web-css",
+      "subjectId": "webdev",
+      "name": "CSS",
+      "notes": "Specificity order (low to high): element selectors, classes/attributes/pseudo-classes, IDs, inline styles. !important overrides everything except a later !important. Specificity is compared tuple-wise, not by counting total selectors."
+    },
+    {
+      "id": "web-js",
+      "subjectId": "webdev",
+      "name": "JavaScript",
+      "notes": "typeof null is 'object' (a historical bug). Array.map returns a new array. var is function-scoped and hoisted, so loop variables declared with var are shared by closures created in the loop."
+    },
+    {
+      "id": "web-dom",
+      "subjectId": "webdev",
+      "name": "DOM Manipulation",
+      "notes": "querySelector returns the first match; querySelectorAll returns a static NodeList (not a live Array). textContent sets raw text; innerHTML parses markup. addEventListener attaches handlers without overwriting."
+    },
+    {
+      "id": "web-async",
+      "subjectId": "webdev",
+      "name": "Asynchronous JavaScript",
+      "notes": "The event loop runs synchronous code first, then microtasks (promise callbacks), then macrotasks (setTimeout). async/await is syntax over promises: await pauses the function until the promise settles."
+    },
+    {
+      "id": "web-flex",
+      "subjectId": "webdev",
+      "name": "Flexbox and Grid",
+      "notes": "justify-content aligns along the main axis; align-items along the cross axis. space-between puts the first item at the start, the last at the end, and equal gaps between items. Grid is two-dimensional; Flexbox is one-dimensional."
+    },
+    {
+      "id": "web-forms",
+      "subjectId": "webdev",
+      "name": "Forms and Validation",
+      "notes": "input types (email, url, number, date) trigger built-in browser validation. The required attribute blocks submission when empty. pattern accepts a regular expression for custom formats."
+    },
+    {
+      "id": "web-api",
+      "subjectId": "webdev",
+      "name": "HTTP Requests and APIs",
+      "notes": "fetch() returns a Promise resolving to a Response object; response.json() also returns a Promise. HTTP 200 means OK, 404 means Not Found, 500 means a server error. REST uses resource URLs with standard methods."
+    },
+    {
+      "id": "os-sched",
+      "subjectId": "os",
+      "name": "CPU Scheduling Algorithms",
+      "notes": "FCFS runs jobs in arrival order. SJF runs the shortest job first (optimal average waiting time, but can starve long jobs). Round Robin gives each ready job a time quantum. Waiting time = start time - arrival time."
+    },
+    {
+      "id": "os-deadlock",
+      "subjectId": "os",
+      "name": "Deadlocks",
+      "notes": "Deadlock needs all four conditions: mutual exclusion, hold and wait, no preemption, circular wait. Banker's algorithm avoids deadlock by granting a request only if a safe sequence still exists."
+    },
+    {
+      "id": "os-paging",
+      "subjectId": "os",
+      "name": "Paging and Segmentation",
+      "notes": "Logical address = page number + offset. Page number = address / page size, offset = address % page size. The page table maps page numbers to frame numbers; the TLB caches recent translations."
+    },
+    {
+      "id": "os-page",
+      "subjectId": "os",
+      "name": "Page Replacement Algorithms",
+      "notes": "FIFO evicts the oldest-loaded page and can suffer Belady's anomaly (more frames, more faults). LRU evicts the least recently used page. OPT evicts the page used farthest in the future and is optimal but unrealisable."
+    },
+    {
+      "id": "os-sync",
+      "subjectId": "os",
+      "name": "Synchronization",
+      "notes": "A semaphore's wait() decrements (blocking at zero) and signal() increments. A binary semaphore (0/1) behaves like a mutex. A mutex additionally enforces ownership: only the locker may unlock."
+    },
+    {
+      "id": "os-fs",
+      "subjectId": "os",
+      "name": "File Systems",
+      "notes": "An inode stores a file's metadata (type, permissions, owner, size, timestamps, data block pointers) but not its name; names live in directory entries. Directories map names to inode numbers."
+    },
+    {
+      "id": "os-syscall",
+      "subjectId": "os",
+      "name": "System Calls",
+      "notes": "fork() creates a child process: it returns the child's PID to the parent and 0 to the child, and -1 on failure. exec() replaces the calling process image. wait() lets a parent collect a terminated child."
+    },
+    {
+      "id": "os-mem",
+      "subjectId": "os",
+      "name": "Virtual Memory",
+      "notes": "Demand paging loads pages only on first access, so a program larger than physical memory can run. A page fault triggers the OS to fetch the missing page from disk, possibly evicting another page."
+    },
+    {
+      "id": "ps-loops",
+      "subjectId": "pseudocode",
+      "name": "Loops",
+      "notes": "A loop that runs from 1 to n inclusive executes n times. Sum 1..n = n(n+1)/2. Off-by-one errors come from confusing < with <= in the loop condition."
+    },
+    {
+      "id": "ps-nested",
+      "subjectId": "pseudocode",
+      "name": "Nested Loops",
+      "notes": "Total inner executions = outer iterations x inner iterations. A 3x2 nested loop prints 6 times. Nested loops over n give O(n^2) work even when the inner bound depends on the outer index (triangular, n(n+1)/2)."
+    },
+    {
+      "id": "ps-rec",
+      "subjectId": "pseudocode",
+      "name": "Recursion",
+      "notes": "Every recursive function needs a base case and progress toward it. factorial(n) = n * factorial(n-1), factorial(0) = 1. fib with fib(1) = fib(2) = 1 gives 1, 1, 2, 3, 5, 8, ..."
+    },
+    {
+      "id": "ps-arr",
+      "subjectId": "pseudocode",
+      "name": "Arrays",
+      "notes": "Scanning for a maximum keeps a running best value and updates it only when a larger element appears. A single left-to-right pass finds the maximum in O(n) time and O(1) extra space."
+    },
+    {
+      "id": "ps-sort",
+      "subjectId": "pseudocode",
+      "name": "Sorting",
+      "notes": "One bubble-sort pass compares adjacent pairs and swaps out-of-order ones, so the largest element 'bubbles' to the end. After pass k, the last k elements are in final sorted order."
+    },
+    {
+      "id": "ps-search",
+      "subjectId": "pseudocode",
+      "name": "Searching",
+      "notes": "Binary search needs a sorted array. It compares the target with the middle element and discards half the range each step: O(log n) comparisons. Linear search scans in order: O(n)."
+    },
+    {
+      "id": "ps-complex",
+      "subjectId": "pseudocode",
+      "name": "Time Complexity",
+      "notes": "A loop over n with an inner loop over i (1..n triangular) performs n(n+1)/2 operations = O(n^2). A loop that halves the range each step is O(log n). Drop constants and lower-order terms in Big-O."
+    },
+    {
+      "id": "ps-str",
+      "subjectId": "pseudocode",
+      "name": "Strings",
+      "notes": "Vowels are a, e, i, o, u (case-insensitive when specified). Counting them is a single scan with a membership test. Reversing a string swaps symmetric characters."
+    },
+    {
+      "id": "ps-debug",
+      "subjectId": "pseudocode",
+      "name": "Debugging Logical Errors",
+      "notes": "A logical error compiles and runs but gives a wrong result. The classic off-by-one: a loop meant to include n written as i < n stops at n-1, so the last value is silently skipped."
+    }
+  ],
+  "questions": [
+    {
+      "id": "q-dbms-keys-01",
+      "subjectId": "dbms",
+      "topic": "Keys and Constraints",
+      "difficulty": "easy",
+      "question": "In a relational database, which key is selected by the designer as the main unique identifier of a table?",
+      "options": [
+        "Candidate key",
+        "Primary key",
+        "Foreign key",
+        "Alternate key"
+      ],
+      "answer": 1,
+      "explanation": "The primary key is the candidate key chosen as the principal identifier. Every candidate key can uniquely identify a tuple, but only one becomes the primary key; the remaining candidates are alternate keys, and a foreign key references another table's primary key.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-dbms-norm-01",
+      "subjectId": "dbms",
+      "topic": "Normalization",
+      "difficulty": "easy",
+      "question": "A table is in First Normal Form (1NF) if and only if:",
+      "options": [
+        "It has no partial dependencies",
+        "All of its attributes hold atomic (indivisible) values",
+        "Every non-key attribute depends on the whole key",
+        "It has no transitive dependencies"
+      ],
+      "answer": 1,
+      "explanation": "1NF requires atomic values in every cell. Removing partial dependencies gives 2NF, and removing transitive dependencies gives 3NF; neither is required for 1NF.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-dbms-fd-01",
+      "subjectId": "dbms",
+      "topic": "Functional Dependencies",
+      "difficulty": "medium",
+      "question": "Consider R(A, B, C, D) with functional dependencies F = {A -> B, B -> C, A -> D}. Which attribute is a candidate key of R?",
+      "options": [
+        "A",
+        "B",
+        "AB",
+        "AD"
+      ],
+      "answer": 0,
+      "explanation": "Compute the closure of A: start with {A}. A -> B adds B, B -> C adds C, A -> D adds D, giving A+ = {A, B, C, D}, the full set of attributes. Since A alone determines everything and no smaller set does, A is the candidate key.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-dbms-sql-01",
+      "subjectId": "dbms",
+      "topic": "SQL Queries",
+      "difficulty": "easy",
+      "question": "Employees table: (1, Anita, 40000), (2, Vikram, 60000), (3, Meera, 55000).\nQuery: SELECT name FROM Employees WHERE salary > 50000 ORDER BY name ASC;\nWhat is the output?",
+      "options": [
+        "Meera, Vikram",
+        "Vikram, Meera",
+        "Anita, Meera",
+        "Vikram only"
+      ],
+      "answer": 0,
+      "explanation": "Step 1: WHERE salary > 50000 keeps Vikram (60000) and Meera (55000); Anita (40000) is dropped. Step 2: ORDER BY name ASC sorts them alphabetically: Meera, then Vikram.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-dbms-sql-02",
+      "subjectId": "dbms",
+      "topic": "SQL Queries",
+      "difficulty": "medium",
+      "question": "Employees table: (1, Anita, 30000), (2, Vikram, 60000), (3, Meera, 45000).\nQuery: SELECT name FROM Employees WHERE salary > (SELECT AVG(salary) FROM Employees);\nWhat is the output?",
+      "options": [
+        "Vikram",
+        "Meera",
+        "Vikram, Meera",
+        "No rows"
+      ],
+      "answer": 0,
+      "explanation": "Step 1: AVG(salary) = (30000 + 60000 + 45000) / 3 = 45000. Step 2: salary > 45000 keeps only Vikram (60000); Meera's 45000 is not strictly greater, and Anita's 30000 is below.",
+      "marks": 1,
+      "timeSec": 120
+    },
+    {
+      "id": "q-dbms-joins-01",
+      "subjectId": "dbms",
+      "topic": "Joins and Subqueries",
+      "difficulty": "medium",
+      "question": "Students has 3 rows. Enrollments has 2 rows, each matching a different student. How many rows does this query return?\nSELECT * FROM Students LEFT JOIN Enrollments ON Students.id = Enrollments.student_id;",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer": 1,
+      "explanation": "A LEFT JOIN returns every row of the left table once. The 2 matched students produce rows with their enrollment data, and the unmatched student still appears once with NULLs for the enrollment columns, giving 3 rows. An INNER JOIN would return only 2.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-dbms-acid-01",
+      "subjectId": "dbms",
+      "topic": "Transactions and ACID Properties",
+      "difficulty": "easy",
+      "question": "Which ACID property guarantees that a transaction is treated as a single indivisible unit - either all of its changes happen or none do?",
+      "options": [
+        "Atomicity",
+        "Consistency",
+        "Isolation",
+        "Durability"
+      ],
+      "answer": 0,
+      "explanation": "Atomicity is the all-or-nothing property, implemented with logging and rollback. Consistency moves the database between valid states, isolation hides concurrent transactions from each other, and durability makes committed changes permanent.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-dbms-conc-01",
+      "subjectId": "dbms",
+      "topic": "Concurrency Control",
+      "difficulty": "medium",
+      "question": "Account balance X = 100. Transaction T1 reads X (100), T2 reads X (100), T1 writes X = 110, then T2 writes X = 120. The final balance is 120 and T1's update has vanished. What anomaly is this?",
+      "options": [
+        "Dirty read",
+        "Lost update",
+        "Unrepeatable read",
+        "Phantom read"
+      ],
+      "answer": 1,
+      "explanation": "This is the lost update problem: both transactions based their writes on the same stale read, so the second write overwrote the first. A dirty read would involve reading uncommitted data, an unrepeatable read involves re-reading changed data, and a phantom read involves new rows appearing.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-dbms-index-01",
+      "subjectId": "dbms",
+      "topic": "Indexing",
+      "difficulty": "easy",
+      "question": "Which data structure is most commonly used for database indexes because it supports both equality lookups and ordered range scans efficiently?",
+      "options": [
+        "Hash table",
+        "B+ tree",
+        "Linked list",
+        "Stack"
+      ],
+      "answer": 1,
+      "explanation": "A B+ tree keeps keys sorted in its leaves with links between them, so equality and range queries both cost O(log n) plus the scan. A hash index gives O(1) equality lookups but cannot serve range queries.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-dbms-er-01",
+      "subjectId": "dbms",
+      "topic": "ER Diagrams",
+      "difficulty": "easy",
+      "question": "In an Entity-Relationship diagram, what does a diamond shape represent?",
+      "options": [
+        "An entity",
+        "An attribute",
+        "A relationship",
+        "A key"
+      ],
+      "answer": 2,
+      "explanation": "Diamonds represent relationships between entities. Rectangles are entities, ellipses are attributes, and underlined attributes (or separate key notation) mark keys.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-dbms-rec-01",
+      "subjectId": "dbms",
+      "topic": "Database Recovery",
+      "difficulty": "medium",
+      "question": "Under write-ahead logging (WAL), which rule must hold before a modified data page may be written to disk?",
+      "options": [
+        "The transaction must commit first",
+        "The corresponding log record must already be on stable storage",
+        "A checkpoint must occur first",
+        "The buffer must be flushed twice"
+      ],
+      "answer": 1,
+      "explanation": "WAL requires the log record to reach stable storage before the data page it describes. That way, if a crash happens after the page write, the log still contains everything needed to redo or undo the change.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-net-osi-01",
+      "subjectId": "networks",
+      "topic": "OSI Model",
+      "difficulty": "easy",
+      "question": "Which OSI layer is responsible for reliable end-to-end delivery of data between two hosts?",
+      "options": [
+        "Network layer",
+        "Transport layer",
+        "Session layer",
+        "Data Link layer"
+      ],
+      "answer": 1,
+      "explanation": "The Transport layer (TCP/UDP) provides process-to-process, end-to-end delivery. The Network layer routes host-to-host, the Data Link layer delivers node-to-node on one link, and the Session layer manages dialogs.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-net-tcpudp-01",
+      "subjectId": "networks",
+      "topic": "TCP and UDP",
+      "difficulty": "easy",
+      "question": "Which protocol is connectionless, does not guarantee delivery, and does not preserve ordering?",
+      "options": [
+        "TCP",
+        "UDP",
+        "HTTP",
+        "SCTP"
+      ],
+      "answer": 1,
+      "explanation": "UDP sends datagrams with no connection setup, no acknowledgements, and no retransmission, so packets may be lost or reordered. TCP adds all of those guarantees at the cost of overhead.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-net-ip-01",
+      "subjectId": "networks",
+      "topic": "IP Addressing",
+      "difficulty": "easy",
+      "question": "What is the default subnet mask of a Class C network?",
+      "options": [
+        "255.0.0.0",
+        "255.255.0.0",
+        "255.255.255.0",
+        "255.255.255.255"
+      ],
+      "answer": 2,
+      "explanation": "Class C addresses (192.0.0.0 - 223.255.255.255) use 24 network bits, giving the mask 255.255.255.0. Class A uses 255.0.0.0 and Class B uses 255.255.0.0.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-net-subnet-01",
+      "subjectId": "networks",
+      "topic": "Subnetting",
+      "difficulty": "medium",
+      "question": "How many usable host addresses does the network 192.168.10.0/26 provide?",
+      "options": [
+        "30",
+        "62",
+        "126",
+        "254"
+      ],
+      "answer": 1,
+      "explanation": "A /26 prefix leaves 32 - 26 = 6 host bits, so there are 2^6 = 64 addresses. Two are unusable (the network address and the broadcast address), leaving 64 - 2 = 62 usable hosts.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-net-subnet-02",
+      "subjectId": "networks",
+      "topic": "Subnetting",
+      "difficulty": "medium",
+      "question": "If the network 10.0.0.0/8 is divided into /16 subnets, how many subnets are created?",
+      "options": [
+        "16",
+        "128",
+        "256",
+        "65536"
+      ],
+      "answer": 2,
+      "explanation": "Borrowing bits from /8 to /16 takes 16 - 8 = 8 bits, producing 2^8 = 256 subnets. Each /16 subnet then holds 2^16 - 2 = 65534 usable hosts.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-net-dns-01",
+      "subjectId": "networks",
+      "topic": "DNS",
+      "difficulty": "easy",
+      "question": "DNS queries normally use which transport protocol and port?",
+      "options": [
+        "TCP port 80",
+        "UDP port 53",
+        "TCP port 443",
+        "UDP port 67"
+      ],
+      "answer": 1,
+      "explanation": "DNS primarily uses UDP port 53 because single-query exchanges are small and fast; TCP port 53 is reserved for zone transfers and responses too large for UDP.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-net-http-01",
+      "subjectId": "networks",
+      "topic": "HTTP and HTTPS",
+      "difficulty": "easy",
+      "question": "By default, HTTPS uses which port?",
+      "options": [
+        "80",
+        "443",
+        "21",
+        "25"
+      ],
+      "answer": 1,
+      "explanation": "HTTPS (HTTP over TLS) uses port 443, while plain HTTP uses port 80. Port 21 is FTP and port 25 is SMTP.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-net-tcp-02",
+      "subjectId": "networks",
+      "topic": "Flow Control and Congestion Control",
+      "difficulty": "medium",
+      "question": "During TCP slow start, how does the congestion window (cwnd) grow?",
+      "options": [
+        "Linearly, by 1 MSS per RTT",
+        "Exponentially, doubling every RTT",
+        "It stays constant until loss occurs",
+        "It halves every RTT"
+      ],
+      "answer": 1,
+      "explanation": "In slow start, every acknowledged segment increases cwnd, so cwnd roughly doubles each round-trip time until it reaches the slow-start threshold, after which congestion avoidance grows it linearly.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-net-error-01",
+      "subjectId": "networks",
+      "topic": "Error Detection",
+      "difficulty": "medium",
+      "question": "What minimum Hamming distance between codewords is required to correct all single-bit errors?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": 2,
+      "explanation": "Correction of t errors needs distance at least 2t + 1. For t = 1, that is 3. Distance 2 only detects single-bit errors; distance 1 detects nothing.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-net-devices-01",
+      "subjectId": "networks",
+      "topic": "Network Devices",
+      "difficulty": "easy",
+      "question": "A router operates primarily at which OSI layer?",
+      "options": [
+        "Physical layer",
+        "Data Link layer",
+        "Network layer",
+        "Transport layer"
+      ],
+      "answer": 2,
+      "explanation": "A router forwards packets between networks using IP addresses, which is Layer 3 (Network). Switches work at Layer 2 with MAC addresses, and hubs simply repeat signals at Layer 1.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-web-html-01",
+      "subjectId": "webdev",
+      "topic": "HTML",
+      "difficulty": "easy",
+      "question": "Which HTML tag is used to create a hyperlink?",
+      "options": [
+        "<link>",
+        "<a>",
+        "<href>",
+        "<url>"
+      ],
+      "answer": 1,
+      "explanation": "The anchor tag <a href=\"...\"> creates a hyperlink. <link> loads external resources (usually stylesheets) in the head; <href> and <url> are not HTML tags.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-web-css-01",
+      "subjectId": "webdev",
+      "topic": "CSS",
+      "difficulty": "medium",
+      "question": "Given the CSS rules: p { color: red; } .note { color: blue; } #main { color: green; }\nWhat color is the text of <p id=\"main\" class=\"note\">Hello</p>?",
+      "options": [
+        "red",
+        "blue",
+        "green",
+        "black"
+      ],
+      "answer": 2,
+      "explanation": "Specificity decides: element selector (0,0,1) < class selector (0,1,0) < ID selector (1,0,0). The ID rule #main wins over the class and element rules, so the text is green.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-web-js-01",
+      "subjectId": "webdev",
+      "topic": "JavaScript",
+      "difficulty": "easy",
+      "question": "What is the output of console.log(typeof null) in JavaScript?",
+      "options": [
+        "\"null\"",
+        "\"object\"",
+        "\"undefined\"",
+        "\"number\""
+      ],
+      "answer": 1,
+      "explanation": "typeof null returns \"object\". This is a long-standing bug from JavaScript's first implementation, where null was represented with the object type tag, and it was never fixed for compatibility.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-web-js-02",
+      "subjectId": "webdev",
+      "topic": "JavaScript",
+      "difficulty": "easy",
+      "question": "What does [1, 2, 3].map(x => x * 2) evaluate to?",
+      "options": [
+        "[1, 2, 3]",
+        "[2, 4, 6]",
+        "[2, 3, 4]",
+        "[1, 4, 9]"
+      ],
+      "answer": 1,
+      "explanation": "map applies the function to every element and returns a NEW array: 1*2 = 2, 2*2 = 4, 3*2 = 6. The original array is unchanged.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-web-js-03",
+      "subjectId": "webdev",
+      "topic": "JavaScript",
+      "difficulty": "medium",
+      "question": "What does this code print?\nfor (var i = 0; i < 3; i++) { setTimeout(() => console.log(i), 0); }",
+      "options": [
+        "0, 1, 2",
+        "3, 3, 3",
+        "0, 0, 0",
+        "undefined, undefined, undefined"
+      ],
+      "answer": 1,
+      "explanation": "var is function-scoped, so all three arrow functions close over the SAME variable i. The callbacks run after the loop finishes, when i is 3, so they print 3, 3, 3. Using let would give 0, 1, 2 because let is block-scoped per iteration.",
+      "marks": 1,
+      "timeSec": 120
+    },
+    {
+      "id": "q-web-dom-01",
+      "subjectId": "webdev",
+      "topic": "DOM Manipulation",
+      "difficulty": "easy",
+      "question": "What does document.querySelectorAll() return?",
+      "options": [
+        "A plain Array",
+        "A static NodeList",
+        "A live HTMLCollection",
+        "A single Element"
+      ],
+      "answer": 1,
+      "explanation": "querySelectorAll returns a static NodeList: a snapshot of matching elements that does not update when the DOM changes. getElementsByClassName returns a live HTMLCollection instead.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-web-async-01",
+      "subjectId": "webdev",
+      "topic": "Asynchronous JavaScript",
+      "difficulty": "medium",
+      "question": "What is the output order of this code?\nconsole.log('A'); setTimeout(() => console.log('B'), 0); Promise.resolve().then(() => console.log('C')); console.log('D');",
+      "options": [
+        "A, B, C, D",
+        "A, D, C, B",
+        "A, C, D, B",
+        "D, A, C, B"
+      ],
+      "answer": 1,
+      "explanation": "Step 1: synchronous code runs first: A, then D. Step 2: microtasks (promise callbacks) run before macrotasks, so C prints next. Step 3: the setTimeout callback (a macrotask) prints B last. Order: A, D, C, B.",
+      "marks": 1,
+      "timeSec": 120
+    },
+    {
+      "id": "q-web-flex-01",
+      "subjectId": "webdev",
+      "topic": "Flexbox and Grid",
+      "difficulty": "easy",
+      "question": "What does justify-content: space-between do in a flex container?",
+      "options": [
+        "Centers all items together",
+        "Places the first item at the start, the last at the end, with equal gaps between items",
+        "Stacks items vertically",
+        "Makes all items equal width"
+      ],
+      "answer": 1,
+      "explanation": "space-between distributes free space only BETWEEN items: the first item touches the start edge, the last touches the end edge, and the gaps between consecutive items are equal.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-web-forms-01",
+      "subjectId": "webdev",
+      "topic": "Forms and Validation",
+      "difficulty": "easy",
+      "question": "What does <input type=\"email\"> do that a plain text input does not?",
+      "options": [
+        "It sends the form by email",
+        "The browser checks that the value looks like an email address",
+        "It encrypts the input",
+        "It makes the field required"
+      ],
+      "answer": 1,
+      "explanation": "The email input type triggers built-in browser validation: on submit, the value must match an email-like pattern or the browser blocks submission with a message. It does not send email or make the field required.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-web-api-01",
+      "subjectId": "webdev",
+      "topic": "HTTP Requests and APIs",
+      "difficulty": "easy",
+      "question": "What does the fetch() function return?",
+      "options": [
+        "The JSON data directly",
+        "A Promise that resolves to a Response object",
+        "An XMLHttpRequest object",
+        "A string containing the body"
+      ],
+      "answer": 1,
+      "explanation": "fetch returns a Promise that resolves to a Response object once headers arrive. The body still needs reading, e.g. await response.json(), which itself returns a Promise. Note that fetch only rejects on network failure, not on HTTP error statuses.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-os-sched-01",
+      "subjectId": "os",
+      "topic": "CPU Scheduling Algorithms",
+      "difficulty": "medium",
+      "question": "Processes arrive as: P1 (arrival 0, burst 5), P2 (arrival 1, burst 3), P3 (arrival 2, burst 2). Under First-Come-First-Served (FCFS), what is the average waiting time?",
+      "options": [
+        "2.00",
+        "3.00",
+        "3.33",
+        "4.33"
+      ],
+      "answer": 2,
+      "explanation": "FCFS timeline: P1 runs 0-5, P2 runs 5-8, P3 runs 8-10. Waiting times (start - arrival): P1 = 0 - 0 = 0, P2 = 5 - 1 = 4, P3 = 8 - 2 = 6. Average = (0 + 4 + 6) / 3 = 10/3 = 3.33.",
+      "marks": 1,
+      "timeSec": 120
+    },
+    {
+      "id": "q-os-sched-02",
+      "subjectId": "os",
+      "topic": "CPU Scheduling Algorithms",
+      "difficulty": "medium",
+      "question": "For the same processes P1 (arrival 0, burst 5), P2 (arrival 1, burst 3), P3 (arrival 2, burst 2), what is the average waiting time under non-preemptive Shortest Job First (SJF)?",
+      "options": [
+        "2.33",
+        "3.00",
+        "3.33",
+        "4.00"
+      ],
+      "answer": 1,
+      "explanation": "At t=0 only P1 is ready, so P1 runs 0-5. At t=5, ready jobs are P2 (burst 3) and P3 (burst 2); SJF picks P3 (5-7), then P2 (7-10). Waiting times: P1 = 0, P3 = 5 - 2 = 3, P2 = 7 - 1 = 6. Average = (0 + 3 + 6) / 3 = 3.00.",
+      "marks": 1,
+      "timeSec": 120
+    },
+    {
+      "id": "q-os-deadlock-01",
+      "subjectId": "os",
+      "topic": "Deadlocks",
+      "difficulty": "easy",
+      "question": "Deadlock requires four conditions. Which condition states that a resource cannot be forcibly taken away from a process that holds it?",
+      "options": [
+        "Mutual exclusion",
+        "Hold and wait",
+        "No preemption",
+        "Circular wait"
+      ],
+      "answer": 2,
+      "explanation": "No preemption means a resource is released only voluntarily by its holder. The other conditions are mutual exclusion (one holder at a time), hold and wait (holding resources while requesting more), and circular wait (a cycle of waiting processes).",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-os-paging-01",
+      "subjectId": "os",
+      "topic": "Paging and Segmentation",
+      "difficulty": "medium",
+      "question": "With a page size of 4 KB, a logical address of 8196 belongs to which page number?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": 1,
+      "explanation": "Page number = address / page size = 8196 / 4096 = 2 (integer division), with offset 8196 % 4096 = 4. So the address lies in page 2 at offset 4.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-os-page-01",
+      "subjectId": "os",
+      "topic": "Page Replacement Algorithms",
+      "difficulty": "medium",
+      "question": "With 3 page frames and reference string 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5, how many page faults occur under FIFO replacement?",
+      "options": [
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "answer": 2,
+      "explanation": "Simulate FIFO (evict the oldest): 1 miss, 2 miss, 3 miss, 4 miss (evict 1), 1 miss (evict 2), 2 miss (evict 3), 5 miss (evict 4), 1 hit, 2 hit, 3 miss (evict 1), 4 miss (evict 2), 5 hit. Faults occur at 9 of the 12 references.",
+      "marks": 1,
+      "timeSec": 120
+    },
+    {
+      "id": "q-os-sync-01",
+      "subjectId": "os",
+      "topic": "Synchronization",
+      "difficulty": "easy",
+      "question": "A binary semaphore is most similar to which synchronization primitive?",
+      "options": [
+        "A monitor",
+        "A mutex",
+        "A counting semaphore with value 10",
+        "A message queue"
+      ],
+      "answer": 1,
+      "explanation": "A binary semaphore takes only values 0 and 1, so it behaves like a mutex (mutual exclusion lock). The difference: a mutex enforces ownership (only the locker may unlock), while any process may signal a semaphore.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-os-deadlock-02",
+      "subjectId": "os",
+      "topic": "Deadlocks",
+      "difficulty": "medium",
+      "question": "What is the purpose of the Banker's algorithm?",
+      "options": [
+        "Deadlock detection",
+        "Deadlock avoidance",
+        "Deadlock recovery",
+        "Deadlock prevention by preemption"
+      ],
+      "answer": 1,
+      "explanation": "Banker's algorithm avoids deadlock: before granting a resource request, it checks whether a safe sequence of completions still exists for all processes. If granting would leave no safe sequence, the request is deferred.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-os-fs-01",
+      "subjectId": "os",
+      "topic": "File Systems",
+      "difficulty": "easy",
+      "question": "In a Unix-like file system, what does an inode store?",
+      "options": [
+        "The file name and its data",
+        "File metadata and pointers to its data blocks",
+        "Only the file size",
+        "The directory entries of a folder"
+      ],
+      "answer": 1,
+      "explanation": "An inode holds metadata: file type, permissions, owner, size, timestamps, and pointers to data blocks. The file NAME lives in directory entries that map names to inode numbers; the data lives in the blocks.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-os-syscall-01",
+      "subjectId": "os",
+      "topic": "System Calls",
+      "difficulty": "easy",
+      "question": "After a successful fork(), what value does the call return in the child process?",
+      "options": [
+        "The child's PID",
+        "The parent's PID",
+        "0",
+        "-1"
+      ],
+      "answer": 2,
+      "explanation": "fork() returns the child's PID to the parent (so it can manage the child) and 0 to the child (so it knows it is the child). A return of -1 means fork failed.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-os-mem-01",
+      "subjectId": "os",
+      "topic": "Virtual Memory",
+      "difficulty": "easy",
+      "question": "What is the primary benefit of virtual memory with demand paging?",
+      "options": [
+        "Faster CPU execution",
+        "Programs larger than physical memory can execute",
+        "Multiple CPUs can share memory",
+        "Disk defragmentation"
+      ],
+      "answer": 1,
+      "explanation": "Demand paging loads pages only when first accessed, so a program's logical address space can exceed physical RAM; missing pages are fetched on page faults, possibly evicting other pages to disk.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-ps-loops-01",
+      "subjectId": "pseudocode",
+      "topic": "Loops",
+      "difficulty": "easy",
+      "question": "What is the output of this pseudocode?\nsum = 0\nfor i = 1 to 5:\n    sum = sum + i\nprint sum",
+      "options": [
+        "10",
+        "12",
+        "15",
+        "20"
+      ],
+      "answer": 2,
+      "explanation": "The loop adds 1 + 2 + 3 + 4 + 5 = 15. (In general, sum 1..n = n(n+1)/2 = 5*6/2 = 15.)",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-ps-nested-01",
+      "subjectId": "pseudocode",
+      "topic": "Nested Loops",
+      "difficulty": "easy",
+      "question": "How many times does print run here?\nfor i = 1 to 3:\n    for j = 1 to 2:\n        print \"*\"",
+      "options": [
+        "3",
+        "5",
+        "6",
+        "9"
+      ],
+      "answer": 2,
+      "explanation": "The inner loop runs 2 times for each of the 3 outer iterations: 3 x 2 = 6 prints.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-ps-rec-01",
+      "subjectId": "pseudocode",
+      "topic": "Recursion",
+      "difficulty": "easy",
+      "question": "What does fact(4) return?\nfunction fact(n):\n    if n == 0: return 1\n    return n * fact(n - 1)",
+      "options": [
+        "12",
+        "24",
+        "16",
+        "120"
+      ],
+      "answer": 1,
+      "explanation": "Unroll: fact(4) = 4 * fact(3) = 4 * 3 * fact(2) = 4 * 3 * 2 * fact(1) = 4 * 3 * 2 * 1 * fact(0) = 24 * 1 = 24.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-ps-rec-02",
+      "subjectId": "pseudocode",
+      "topic": "Recursion",
+      "difficulty": "medium",
+      "question": "What does fib(5) return?\nfunction fib(n):\n    if n == 1 or n == 2: return 1\n    return fib(n - 1) + fib(n - 2)",
+      "options": [
+        "3",
+        "5",
+        "8",
+        "13"
+      ],
+      "answer": 1,
+      "explanation": "Build up: fib(1) = 1, fib(2) = 1, fib(3) = 1 + 1 = 2, fib(4) = 2 + 1 = 3, fib(5) = 3 + 2 = 5.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-ps-arr-01",
+      "subjectId": "pseudocode",
+      "topic": "Arrays",
+      "difficulty": "easy",
+      "question": "What does this pseudocode output for arr = [3, 9, 2, 7]?\nmax = arr[0]\nfor x in arr:\n    if x > max: max = x\nprint max",
+      "options": [
+        "3",
+        "7",
+        "9",
+        "2"
+      ],
+      "answer": 2,
+      "explanation": "Trace: max starts at 3; 9 > 3 so max = 9; 2 and 7 are not > 9, so max stays 9. Output: 9.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-ps-sort-01",
+      "subjectId": "pseudocode",
+      "topic": "Sorting",
+      "difficulty": "medium",
+      "question": "After ONE pass of bubble sort (ascending, comparing adjacent pairs left to right) on [5, 2, 8, 1], what is the array?",
+      "options": [
+        "[2, 5, 1, 8]",
+        "[2, 1, 5, 8]",
+        "[1, 2, 5, 8]",
+        "[5, 2, 1, 8]"
+      ],
+      "answer": 0,
+      "explanation": "Trace the pass: compare 5,2 -> swap -> [2, 5, 8, 1]; compare 5,8 -> no swap; compare 8,1 -> swap -> [2, 5, 1, 8]. The largest element (8) has bubbled to the end.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-ps-search-01",
+      "subjectId": "pseudocode",
+      "topic": "Searching",
+      "difficulty": "medium",
+      "question": "How many comparisons does binary search make to find 8 in the sorted array [2, 4, 6, 8, 10]?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": 1,
+      "explanation": "Comparison 1: middle element is 6; 8 > 6, so discard the left half. Comparison 2: middle of [8, 10] is 8; found. Total: 2 comparisons.",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-ps-complex-01",
+      "subjectId": "pseudocode",
+      "topic": "Time Complexity",
+      "difficulty": "medium",
+      "question": "What is the time complexity of this code?\nfor i = 1 to n:\n    for j = 1 to i:\n        print i, j",
+      "options": [
+        "O(n)",
+        "O(n log n)",
+        "O(n^2)",
+        "O(2^n)"
+      ],
+      "answer": 2,
+      "explanation": "The inner loop runs 1 + 2 + ... + n = n(n+1)/2 times, which grows quadratically. Dropping constants and lower-order terms gives O(n^2).",
+      "marks": 1,
+      "timeSec": 90
+    },
+    {
+      "id": "q-ps-str-01",
+      "subjectId": "pseudocode",
+      "topic": "Strings",
+      "difficulty": "easy",
+      "question": "How many vowels does the string \"hello\" contain?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": 1,
+      "explanation": "Scanning h-e-l-l-o: the vowels are 'e' and 'o' - exactly 2. The letters h and l are consonants.",
+      "marks": 1,
+      "timeSec": 60
+    },
+    {
+      "id": "q-ps-debug-01",
+      "subjectId": "pseudocode",
+      "topic": "Debugging Logical Errors",
+      "difficulty": "medium",
+      "question": "This code is meant to compute the sum of 1..n, but it returns a wrong result:\nsum = 0\nfor i = 1; i < n; i++:\n    sum = sum + i\nWhat kind of bug is this?",
+      "options": [
+        "Infinite loop",
+        "Off-by-one error",
+        "Type error",
+        "Division by zero"
+      ],
+      "answer": 1,
+      "explanation": "The loop condition i < n stops at i = n - 1, so the final value n is never added. This is the classic off-by-one error: the boundary should be i <= n. The code runs fine otherwise, which is why it is a logical error, not a crash.",
+      "marks": 1,
+      "timeSec": 90
+    }
+  ]
+}
